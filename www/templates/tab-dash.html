@@ -6,26 +6,28 @@
                 <h2>{{feed.name}}</h2>
                 <p>{{feed.desc}}</p>
             </div>
+            <!--
             <div class="item item-image">
                 <img src="../img/{{feed.id}}.png">
             </div>
-            <a class="item item-icon-left positive"  href="#/tab/feed/{{feed.id}}">
+-->
+            <a class="item item-icon-left positive" href="#/tab/feed/{{feed.id}}">
                 <i class="icon ion-ios7-arrow-forward"></i>
                 Jump In!
             </a>
-<!--         <div class="list card">
-            <div class="item item-avatar">
-                <img src="../img/ionic.png">
-                <h2>AP Physics</h2>
-                <p>Group for AP Physics!</p>
+        </div>
+        <form>
+            <div class="list list-inset">
+                <label class="item item-input">
+                    <input type="text" placeholder="Name" ng-model="post.name">
+                </label>
+                <label class="item item-input">
+                    <input type="text" placeholder="Description" ng-model="post.desc">
+                </label>
+                <button class="button button-block button-royal" ng-click="add(post)">
+                    Add Post
+                </button>
             </div>
-            <div class="item item-image">
-                <img src="../img/physics.jpg">
-            </div>
-            <a class="item item-icon-left positive" href="#">
-                <i class="icon ion-ios7-arrow-forward"></i>
-                Jump In!
-            </a>
-        </div> -->
+        </form>
     </ion-content>
 </ion-view>

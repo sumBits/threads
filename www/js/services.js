@@ -94,4 +94,9 @@ angular.module('starter.services', [])
       return friends[friendId];
     }
   }
-});
+})
+//.factory('Groups', function() {
+//    var groups = [{
+//        
+//    }];
+//});
