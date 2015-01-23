@@ -1,7 +1,7 @@
 angular.module('starter.controllers', ['firebase'])
 
 .controller('DashCtrl', function ($scope, $firebase) {
-    var ref = new Firebase("https://threadstsa.firebaseio.com/");
+    var ref = new Firebase("https://threadstsa.firebaseio.com/feeds/");
     var sync = $firebase(ref);
     
     $scope.feeds = sync.$asArray();
