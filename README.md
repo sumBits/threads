@@ -1,7 +1,9 @@
 # Threads
-The social network based off of the ionic framework using phoneGap.
+The social network based off of the Ionic Framework using PhoneGap.
 
-Location based threads for advice, homework and social happenings
+Location based threads for advice, homework and social happenings.
+
+Threads makes it easy to communicate with people around you and get help quickly.
 
 ##Links
 
