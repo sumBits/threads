@@ -33,7 +33,7 @@ angular.module('starter.controllers', ['firebase'])
             user: 'Guest',
             name: post.name,
             desc: post.desc,
-            location: pos,
+            location: 0,
             date: 0,
             category: 'Soon to come'
         });
