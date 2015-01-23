@@ -1,4 +1,4 @@
-# Threads ![failing](http://forthebadge.com/images/badges/oooo-kill-em.svg)
+# Threads ![failing](	https://img.shields.io/travis/joyent/node.svg)
 The social network based off of the Ionic Framework using PhoneGap.
 
 Location based threads for advice, homework and social happenings.
@@ -17,3 +17,9 @@ We made Threads so that we people can interact with others around them.
 
 ##How to setup
 
+===
+![](http://forthebadge.com/images/badges/oooo-kill-em.svg)
+![](http://forthebadge.com/images/badges/reading-6th-grade-level.svg)
+![](http://forthebadge.com/images/badges/ages-12.svg)
+![](http://forthebadge.com/images/badges/certified-snoop-lion.svg)
+![](http://forthebadge.com/images/badges/compatibility-ie-6.svg)
