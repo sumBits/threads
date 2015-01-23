@@ -11,7 +11,7 @@ Threads makes it easy to communicate with people around you and get help quickly
 
 ##Licence
 
-[(https://github.com/FormulaticsCode/threads/blob/master/LICENSE.md "EULA")]
+[EULA] (https://github.com/FormulaticsCode/threads/blob/master/LICENSE.md)
 
 ##How to setup
 
