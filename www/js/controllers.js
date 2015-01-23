@@ -12,10 +12,10 @@ angular.module('starter.controllers', ['firebase'])
             name: post.name,
             desc: post.desc,
             location: 0,
-            
+            date: 0,
+            category: 'Soon to come'
         });
     }
-    
 })
 
 .controller('ChatsCtrl', function ($scope, Chats) {
