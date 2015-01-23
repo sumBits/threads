@@ -1,4 +1,4 @@
-# Threads (https://img.shields.io/travis/joyent/node.svg)
+# Threads ![failing](https://img.shields.io/travis/joyent/node.svg)
 The social network based off of the Ionic Framework using PhoneGap.
 
 Location based threads for advice, homework and social happenings.
