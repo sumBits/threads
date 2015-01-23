@@ -3,15 +3,37 @@ angular.module('starter.controllers', ['firebase'])
 .controller('DashCtrl', function ($scope, $firebase) {
     var ref = new Firebase("https://threadstsa.firebaseio.com/feeds/");
     var sync = $firebase(ref);
-    
+
     $scope.feeds = sync.$asArray();
-    
-    $scope.add = function(post) {
+
+    $scope.add = function (post) {
+        //fix later, doesn't work yet
+        /*
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    var pos = new google.maps.LatLng(position.coords.latitude,
+                        position.coords.longitude);
+                }, function () {
+                    handleNoGeolocation(true);
+                });
+            } else {
+                // Browser doesn't support Geolocation
+                handleNoGeolocation(false);
+            }
+        }
+
+        function handleNoGeolocation(errorFlag) {
+            if (errorFlag) {
+                var content = 'Error: The Geolocation service failed.';
+            } else {
+                var content = 'Error: Your browser doesn\'t support geolocation.';
+            }
+        }*/
         $scope.feeds.$add({
             user: 'Guest',
             name: post.name,
             desc: post.desc,
-            location: 0,
+            location: pos,
             date: 0,
             category: 'Soon to come'
         });
