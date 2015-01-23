@@ -31,7 +31,7 @@ angular.module('starter.controllers', ['firebase'])
         }*/
         $scope.feeds.$add({
             user: 'Guest',
-            name: post.name,
+            title: post.title,
             desc: post.desc,
             location: 0,
             date: 0,
