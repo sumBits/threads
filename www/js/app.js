@@ -94,6 +94,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
                 controller: 'AccountCtrl'
             }
         }
+    })
+    .state('login',{
+        url: '/login',
+        views: {
+            'login': {
+                templateUrl: 'templates/login.html',
+                controller: 'LoginCtrl'
+            }
+        }
     });
 
     // if none of the above states are matched, use this as the fallback
