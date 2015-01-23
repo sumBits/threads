@@ -5,6 +5,8 @@ Location based threads for advice, homework and social happenings.
 
 Threads makes it easy to communicate with people around you and get help quickly.
 
+We made Threads so that we people can interact with others around them.
+
 ##Links
 
 ##Apps
