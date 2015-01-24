@@ -61,8 +61,40 @@ angular.module('starter.controllers', ['firebase'])
     $scope.friend = Friends.get($stateParams.friendId);
 })
 
-.controller('AccountCtrl', function ($scope) {
-    $scope.settings = {
-        enableFriends: true
+.controller('AccountCtrl', function ($scope, fireBaseData) {
+//    $scope.settings = {
+//        enableFriends: true
+//    };
+    
+    $scope.showLoginForm = false; 
+    if (!$scope.user) {
+        $scope.showLoginForm = true; //checks if the user has logged in; if true, the user is not logged in and the login form will be displayed
+    }
+    $scope.user = fireBaseData.ref().getAuth();
+    
+    //Login method
+    $scope.login = function(em, pwd){
+        console.log(em);
+        console.log(pwd);
+        fireBaseData.ref().authWithPassword({
+            email: em,
+            password: pwd
+        }, function(error, authData) {
+            if(error === null){
+                console.log("User ID: " + authData.uid + ", Provider: " + authData.provider);
+                $scope.user = fireBaseData.ref().getAuth();
+                $scope.showLoginForm = false;
+                $scope.$apply();
+            } else {
+                console.log("Error authenticating user: ", error);
+            }
+        });
     };
+    
+    //Logout method
+    $scope.logout = function(){
+        fireBaseData.ref().unauth();
+        $scope.showLoginForm = true;
+    };
+    
 });

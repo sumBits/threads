@@ -1,5 +1,6 @@
 <ion-view view-title="Account">
   <ion-content>
+<!--
     <ion-list>
       <ion-item class="item-toggle">
         Enable Friends
@@ -11,5 +12,19 @@
         </label>
       </ion-item>
     </ion-list>
+-->
+     <div class = "list" ng-show = "showLoginForm">
+         <label class = "item item-input">
+             <span class = "input-label">Email</span><input type="text" ng-model = "em">
+         </label>
+         <label class = "item item-input">
+             <span class = "input-label">Password</span><input type="text" ng-model = "pwd">
+         </label>
+         <button class = "button button-block button-positive" ng-click = "login(em,pwd)">Login</button>
+     </div>
+     <div class = "card" ng-hide = "showLoginForm">
+        <div class = "item item-text-wrap">You are logged in as {{user.password.email}}</div>
+     </div>
+     <button class = "button button-positive" ng-click = "logout()" ng-hide="showLoginForm">Logout</button>
   </ion-content>
 </ion-view>
