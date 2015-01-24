@@ -65,18 +65,4 @@ angular.module('starter.controllers', ['firebase'])
     $scope.settings = {
         enableFriends: true
     };
-})
-
-.controller('LoginCtrl', function ($scope, $firebase) {
-    var ref = new Firebase("https://threadstsa.firebaseio.com");
-    ref.createUser({
-        email: 'helo',
-        passowrd: 'jihi'
-    }, function(error){
-        if(error == null){
-            console.log("User created successfully.");
-        }else{
-            console.log("Error creating user: ", error);
-        }
-    });
 });
