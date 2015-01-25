@@ -1,10 +1,10 @@
 <ion-view view-title="Your Threads">
     <ion-content class="padding" overflow-scroll="true">
-        <div class="list card" ng-repeat="feed in feeds" type="item-text-wrap" href="#/tab/feed/{{feed.id}}">
+        <div class="list card" ng-repeat="thread in userThreads" type="item-text-wrap" href="#/tab/feed/{{feed.id}}">
             <div class="item item-avatar">
                 <img src="../img/ionic.png">
-                <h2>{{feed.title}}</h2>
-                <p>{{feed.desc}}</p>
+                <h2>{{thread.title}}</h2>
+                <p>{{thread.desc}}</p>
             </div>
             <!--
             <div class="item item-image">
