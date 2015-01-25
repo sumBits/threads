@@ -3,12 +3,12 @@
 angular.module('starter.controllers', ['firebase'])
 
 .controller('DashCtrl', function ($scope, $firebase, fireBaseData) {
-    var ref = new Firebase("https://threadstsa.firebaseio.com/feeds/");
+    var ref = new Firebase("https://threadstsa.firebaseio.com/userThreads/");
     var sync = $firebase(ref);
 
     $scope.user = fireBaseData.ref().getAuth();
 
-    $scope.feeds = sync.$asArray();
+    $scope.userThreads = sync.$asArray();
 
     var pos;
     //fix later, doesn't work yet
@@ -35,7 +35,7 @@ angular.module('starter.controllers', ['firebase'])
 
     $scope.add = function (post) {
 
-        $scope.feeds.$add({
+        $scope.userThreads.$add({
             user: $scope.user,
             title: post.title,
             desc: post.desc,
