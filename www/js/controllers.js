@@ -81,6 +81,7 @@ angular.module('starter.controllers', ['firebase'])
             password: pwd
         }, function (error, authData) {
             if (error === null) {
+                $scope.showError = false;
                 console.log("User ID: " + authData.uid + ", Provider: " + authData.provider);
                 $scope.user = fireBaseData.ref().getAuth();
                 $scope.showLoginForm = false;
@@ -89,6 +90,8 @@ angular.module('starter.controllers', ['firebase'])
                 $scope.$apply();
             } else {
                 console.log("Error authenticating user: ", error);
+                $scope.showError = true;
+                $scope.$apply();
             }
         });
     };
