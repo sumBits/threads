@@ -46,16 +46,16 @@ angular.module('starter.controllers', ['firebase'])
         userThread.title = "";
         userThread.desc = "";
     }
-    
-    $scope.joinThread = function(thread){
+
+    $scope.joinThread = function (thread) {
         var childRef = new Firebase("https://threadstsa.firebaseio.com/userThreads/" + thread.$id + "/members");
         childRef.push($scope.user.password.email);
     }
-    
-    $scope.checkIfMember = function(thread){
+
+    $scope.checkIfMember = function (thread) {
         var childRef = new Firebase("https://threadstsa.firebaseio.com/userThreads/" + thread.$id + "/members");
         var exists = false;
-        
+
         return exists;
     }
 })
@@ -88,24 +88,29 @@ angular.module('starter.controllers', ['firebase'])
 
     //Login method
     $scope.login = function (em, pwd) {
-        fireBaseData.ref().authWithPassword({
-            email: em,
-            password: pwd
-        }, function (error, authData) {
-            if (error === null) {
-                $scope.showError = false;
-                console.log("User ID: " + authData.uid + ", Provider: " + authData.provider);
-                $scope.user = fireBaseData.ref().getAuth();
-                $scope.showLoginForm = false;
-                $scope.login.em = null;
-                $scope.login.pwd = null;
-                $scope.$apply();
-            } else {
-                console.log("Error authenticating user: ", error);
-                $scope.showError = true;
-                $scope.$apply();
-            }
-        });
+        if (em && pwd) {
+            fireBaseData.ref().authWithPassword({
+                email: em,
+                password: pwd
+            }, function (error, authData) {
+                if (error === null) {
+                    $scope.showError = false;
+                    console.log("User ID: " + authData.uid + ", Provider: " + authData.provider);
+                    $scope.user = fireBaseData.ref().getAuth();
+                    $scope.showLoginForm = false;
+                    $scope.login.em = null;
+                    $scope.login.pwd = null;
+                    $scope.$apply();
+                } else {
+                    console.log("Error authenticating user: ", error);
+                    $scope.showError = true;
+                    $scope.$apply();
+                }
+            });
+        } else {
+            $scope.showError = true;
+            $scope.$apply();
+        };
     };
 
     //Logout method
