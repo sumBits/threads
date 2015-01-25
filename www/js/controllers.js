@@ -138,4 +138,9 @@ angular.module('starter.controllers', ['firebase'])
 .controller('ThreadViewController', function ($scope) {
     //    $scope.thread = $scope.feeds.get($stateParams.feedId);
     //    $scope.thread = $scope.feed.feedId;
-});
+})
+
+//.controller('LicenseCtrl', function ($scope) {
+
+//})
+;
