@@ -48,7 +48,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         }
     })
     .state('tab.thread', {
-        url: '/feed/:feedId',
+        url: '/userThreads/:threadId',
         views: {
             'tab-dash': {
                 templateUrl: 'templates/tab-thread.html',

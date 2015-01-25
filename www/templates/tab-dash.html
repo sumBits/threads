@@ -1,6 +1,6 @@
 <ion-view view-title="Your Threads">
     <ion-content class="padding" overflow-scroll="true">
-        <div class="list card" ng-repeat="thread in userThreads" type="item-text-wrap" href="#/tab/feed/{{feed.id}}">
+        <div class="list card" ng-repeat="thread in userThreads" type="item-text-wrap" href="#/tab/userThreads/{{thread.title}}">
             <div class="item item-avatar">
                 <img src="../img/ionic.png">
                 <h2>{{thread.title}}</h2>
@@ -11,21 +11,25 @@
                 <img src="../img/{{feed.id}}.png">
             </div>
 -->
-            <a class="item item-icon-left positive" href="#/tab/feed/{{feed.id}}">
+            <a class="item item-icon-left positive" href="#/tab/userThreads/{{thread.title}}" ng-show="checkIfMember(thread)">
                 <i class="icon ion-ios7-arrow-forward"></i>
                 Jump In!
+            </a>
+            
+            <a class = "item item-icon-right positive" ng-click = "joinThread(thread)" ng-hide="checkIfMember(thread)">
+                <i class = "icon ion-ios7-plus"></i>
             </a>
         </div>
         <form>
             <div class="list list-inset">
                 <label class="item item-input">
-                    <input type="text" placeholder="Title" ng-model="post.title">
+                    <input type="text" placeholder="Thread Name" ng-model="userThread.title">
                 </label>
                 <label class="item item-input">
-                    <input type="text" placeholder="Description" ng-model="post.desc">
+                    <input type="text" placeholder="Description" ng-model="userThread.desc">
                 </label>
-                <button class="button button-block button-royal" ng-click="add(post)">
-                    Add Post
+                <button class="button button-block button-royal" ng-click="add(userThread)">
+                    Add Thread
                 </button>
             </div>
         </form>

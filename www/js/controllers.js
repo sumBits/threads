@@ -33,18 +33,30 @@ angular.module('starter.controllers', ['firebase'])
         }
     }
 
-    $scope.add = function (post) {
+    $scope.add = function (userThread) {
         $scope.userThreads.$add({
-            user: $scope.user,
-            title: post.title,
-            desc: post.desc,
+            creator: $scope.user.password.email,
+            title: userThread.title,
+            desc: userThread.desc,
             location: pos,
             date: 0,
             category: 'Soon to come'
         });
 
-        post.title = "";
-        post.desc = "";
+        userThread.title = "";
+        userThread.desc = "";
+    }
+    
+    $scope.joinThread = function(thread){
+        var childRef = new Firebase("https://threadstsa.firebaseio.com/userThreads/" + thread.$id + "/members");
+        childRef.push($scope.user.password.email);
+    }
+    
+    $scope.checkIfMember = function(thread){
+        var childRef = new Firebase("https://threadstsa.firebaseio.com/userThreads/" + thread.$id + "/members");
+        var exists = false;
+        
+        return exists;
     }
 })
 
