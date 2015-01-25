@@ -43,6 +43,9 @@ angular.module('starter.controllers', ['firebase'])
             date: 0,
             category: 'Soon to come'
         });
+        
+        post.title = "";
+        post.desc = "";
     }
 })
 
