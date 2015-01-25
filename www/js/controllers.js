@@ -3,6 +3,7 @@
 angular.module('starter.controllers', ['firebase'])
 
 .controller('DashCtrl', function ($scope, $firebase, fireBaseData) {
+
     var ref = new Firebase("https://threadstsa.firebaseio.com/userThreads/");
     var sync = $firebase(ref);
 
@@ -57,11 +58,19 @@ angular.module('starter.controllers', ['firebase'])
         var exists = false;
         childRef.on('value', function (snapshot) {
             snapshot.forEach(function (secondSnapshot) {
-                if($scope.user.password.email === secondSnapshot.val()){
-                    exists = true;    
+                if ($scope.user.password.email === secondSnapshot.val()) {
+                    exists = true;
                 }
             });
         });
+        if (!exists) {
+            childRef = new Firebase("https://threadstsa.firebaseio.com/userThreads/" + thread.$id + "/creator");
+            childRef.on('value', function (snapshot) {
+                if($scope.user.password.email === snapshot.val()){
+                    exists = true;
+                }
+            });
+        }
         return exists;
     }
 })
