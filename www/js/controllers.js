@@ -34,7 +34,6 @@ angular.module('starter.controllers', ['firebase'])
     }
 
     $scope.add = function (post) {
-
         $scope.feeds.$add({
             user: $scope.user,
             title: post.title,
@@ -79,32 +78,34 @@ angular.module('starter.controllers', ['firebase'])
     $scope.login = function (em, pwd) {
         console.log(em);
         console.log(pwd);
-    $scope.login = function(em, pwd){
-        fireBaseData.ref().authWithPassword({
-            email: em,
-            password: pwd
-        }, function (error, authData) {
-            if (error === null) {
-                console.log("User ID: " + authData.uid + ", Provider: " + authData.provider);
-                $scope.user = fireBaseData.ref().getAuth();
-                $scope.showLoginForm = false;
-                $scope.login.em = null;
-                $scope.login.pwd = null;
-                $scope.$apply();
-            } else {
-                console.log("Error authenticating user: ", error);
-            }
-        });
-    };
+        $scope.login = function (em, pwd) {
+            fireBaseData.ref().authWithPassword({
+                email: em,
+                password: pwd
+            }, function (error, authData) {
+                if (error === null) {
+                    console.log("User ID: " + authData.uid + ", Provider: " + authData.provider);
+                    $scope.user = fireBaseData.ref().getAuth();
+                    $scope.showLoginForm = false;
+                    $scope.login.em = null;
+                    $scope.login.pwd = null;
+                    $scope.$apply();
+                } else {
+                    console.log("Error authenticating user: ", error);
+                }
+            });
+        };
 
-    //Logout method
-    $scope.logout = function () {
-        fireBaseData.ref().unauth();
-        $scope.showLoginForm = true;
-    };
+        //Logout method
+        $scope.logout = function () {
+            fireBaseData.ref().unauth();
+            $scope.showLoginForm = true;
+        };
 
-}
+    }
 })
 
 .controller('ThreadViewController', function ($scope) {
+//    $scope.thread = $scope.feeds.get($stateParams.feedId);
+//    $scope.thread = $scope.feed.feedId;
 });
