@@ -76,9 +76,6 @@ angular.module('starter.controllers', ['firebase'])
     }
 
     //Login method
-    $scope.login = function (em, pwd) {
-        console.log(em);
-        console.log(pwd);
     $scope.login = function(em, pwd){
         fireBaseData.ref().authWithPassword({
             email: em,
@@ -102,8 +99,6 @@ angular.module('starter.controllers', ['firebase'])
         fireBaseData.ref().unauth();
         $scope.showLoginForm = true;
     };
-
-}
 })
 
 .controller('ThreadViewController', function ($scope) {
