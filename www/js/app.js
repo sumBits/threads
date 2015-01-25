@@ -47,6 +47,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
             }
         }
     })
+    .state('tab.thread', {
+        url: '/feed/:feedId',
+        views: {
+            'tab-dash': {
+                templateUrl: 'templates/tab-thread.html',
+                controller: 'ThreadViewController'
+            }
+        }
+    })
 
     .state('tab.chats', {
         url: '/chats',

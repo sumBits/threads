@@ -43,7 +43,7 @@ angular.module('starter.controllers', ['firebase'])
             date: 0,
             category: 'Soon to come'
         });
-        
+
         post.title = "";
         post.desc = "";
     }
@@ -100,4 +100,7 @@ angular.module('starter.controllers', ['firebase'])
         $scope.showLoginForm = true;
     };
 
+})
+
+.controller('ThreadViewController', function ($scope) {
 });
