@@ -2,10 +2,12 @@
 
 angular.module('starter.controllers', ['firebase'])
 
-.controller('DashCtrl', function ($scope, $firebase) {
+.controller('DashCtrl', function ($scope, $firebase, fireBaseData) {
     var ref = new Firebase("https://threadstsa.firebaseio.com/feeds/");
     var sync = $firebase(ref);
-
+    
+    $scope.user = fireBaseData.ref().getAuth();
+    
     $scope.feeds = sync.$asArray();
 
     $scope.add = function (post) {
@@ -32,7 +34,7 @@ angular.module('starter.controllers', ['firebase'])
             }
         }*/
         $scope.feeds.$add({
-            user: 'Guest',
+            user: $scope.user,
             title: post.title,
             desc: post.desc,
             location: 0,
@@ -62,15 +64,11 @@ angular.module('starter.controllers', ['firebase'])
 })
 
 .controller('AccountCtrl', function ($scope, fireBaseData) {
-//    $scope.settings = {
-//        enableFriends: true
-//    };
-    
     $scope.showLoginForm = false; 
+    $scope.user = fireBaseData.ref().getAuth();
     if (!$scope.user) {
         $scope.showLoginForm = true; //checks if the user has logged in; if true, the user is not logged in and the login form will be displayed
     }
-    $scope.user = fireBaseData.ref().getAuth();
     
     //Login method
     $scope.login = function(em, pwd){
