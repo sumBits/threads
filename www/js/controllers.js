@@ -76,9 +76,13 @@ angular.module('starter.controllers', ['firebase'])
     }
 
     //Login method
+<<<<<<< HEAD
     $scope.login = function (em, pwd) {
         console.log(em);
         console.log(pwd);
+=======
+    $scope.login = function(em, pwd){
+>>>>>>> origin/master
         fireBaseData.ref().authWithPassword({
             email: em,
             password: pwd
@@ -87,6 +91,8 @@ angular.module('starter.controllers', ['firebase'])
                 console.log("User ID: " + authData.uid + ", Provider: " + authData.provider);
                 $scope.user = fireBaseData.ref().getAuth();
                 $scope.showLoginForm = false;
+                $scope.login.em = null;
+                $scope.login.pwd = null;
                 $scope.$apply();
             } else {
                 console.log("Error authenticating user: ", error);
