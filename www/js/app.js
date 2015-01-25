@@ -47,6 +47,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
             }
         }
     })
+    .state('tab.thread', {
+        url: '/userThreads/:threadId',
+        views: {
+            'tab-dash': {
+                templateUrl: 'templates/tab-thread.html',
+                controller: 'ThreadViewController'
+            }
+        }
+    })
 
     .state('tab.chats', {
         url: '/chats',
@@ -95,16 +104,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
             }
         }
     })
-    .state('login',{
-        url: '/login',
+    .state('tab/license',{
+        url: '/license',
         views: {
-            'login': {
-                templateUrl: 'templates/login.html',
-                controller: 'LoginCtrl'
+            'tab-account-license': {
+                templateurl: 'templates/tab-license.html'
+                //controler: 'AccountCtrl'
             }
         }
     });
-
+    
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/tab/dash');
 

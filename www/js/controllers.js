@@ -2,43 +2,76 @@
 
 angular.module('starter.controllers', ['firebase'])
 
-.controller('DashCtrl', function ($scope, $firebase) {
-    var ref = new Firebase("https://threadstsa.firebaseio.com/feeds/");
+.controller('DashCtrl', function ($scope, $firebase, fireBaseData) {
+
+    var ref = new Firebase("https://threadstsa.firebaseio.com/userThreads/");
     var sync = $firebase(ref);
 
-    $scope.feeds = sync.$asArray();
+    $scope.user = fireBaseData.ref().getAuth();
 
-    $scope.add = function (post) {
-        //fix later, doesn't work yet
-        /*
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function (position) {
-                    var pos = new google.maps.LatLng(position.coords.latitude,
-                        position.coords.longitude);
-                }, function () {
-                    handleNoGeolocation(true);
-                });
-            } else {
-                // Browser doesn't support Geolocation
-                handleNoGeolocation(false);
-            }
+    $scope.userThreads = sync.$asArray();
+
+    var pos;
+    //fix later, doesn't work yet
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            pos = new google.maps.LatLng(position.coords.latitude,
+                position.coords.longitude);
+        }, function () {
+            handleNoGeolocation(true);
+        });
+    } else {
+        // Browser doesn't support Geolocation
+        handleNoGeolocation(false);
+    }
+
+    function handleNoGeolocation(errorFlag) {
+        if (errorFlag) {
+            var content = 'Error: The Geolocation service failed.';
+        } else {
+            var content = 'Error: Your browser doesn\'t support geolocation.';
         }
+    }
 
-        function handleNoGeolocation(errorFlag) {
-            if (errorFlag) {
-                var content = 'Error: The Geolocation service failed.';
-            } else {
-                var content = 'Error: Your browser doesn\'t support geolocation.';
-            }
-        }*/
-        $scope.feeds.$add({
-            user: 'Guest',
-            title: post.title,
-            desc: post.desc,
-            location: 0,
+    $scope.add = function (userThread) {
+        $scope.userThreads.$add({
+            creator: $scope.user.password.email,
+            title: userThread.title,
+            desc: userThread.desc,
+            location: pos,
             date: 0,
             category: 'Soon to come'
         });
+
+        userThread.title = "";
+        userThread.desc = "";
+    }
+
+    $scope.joinThread = function (thread) {
+        var childRef = new Firebase("https://threadstsa.firebaseio.com/userThreads/" + thread.$id + "/members");
+        childRef.push($scope.user.password.email);
+    }
+
+    $scope.checkIfMember = function (thread) {
+        var childRef = new Firebase("https://threadstsa.firebaseio.com/userThreads/" + thread.$id + "/members");
+        var exists = false;
+        childRef.on('value', function (snapshot) {
+            snapshot.forEach(function (secondSnapshot) {
+                if ($scope.user.password.email === secondSnapshot.val()) {
+                    exists = true;
+                }
+            });
+        });
+        if (!exists) {
+            childRef = new Firebase("https://threadstsa.firebaseio.com/userThreads/" + thread.$id + "/creator");
+            childRef.on('value', function (snapshot) {
+                if($scope.user.password.email === snapshot.val()){
+                    exists = true;
+                }
+            });
+        }
+        return exists;
     }
 })
 
@@ -61,22 +94,48 @@ angular.module('starter.controllers', ['firebase'])
     $scope.friend = Friends.get($stateParams.friendId);
 })
 
-.controller('AccountCtrl', function ($scope) {
-    $scope.settings = {
-        enableFriends: true
+.controller('AccountCtrl', function ($scope, fireBaseData) {
+    $scope.showLoginForm = false;
+    $scope.user = fireBaseData.ref().getAuth();
+    if (!$scope.user) {
+        $scope.showLoginForm = true; //checks if the user has logged in; if true, the user is not logged in and the login form will be displayed
+    }
+
+    //Login method
+    $scope.login = function (em, pwd) {
+        if (em && pwd) {
+            fireBaseData.ref().authWithPassword({
+                email: em,
+                password: pwd
+            }, function (error, authData) {
+                if (error === null) {
+                    $scope.showError = false;
+                    console.log("User ID: " + authData.uid + ", Provider: " + authData.provider);
+                    $scope.user = fireBaseData.ref().getAuth();
+                    $scope.showLoginForm = false;
+                    $scope.login.em = null;
+                    $scope.login.pwd = null;
+                    $scope.$apply();
+                } else {
+                    console.log("Error authenticating user: ", error);
+                    $scope.showError = true;
+                    $scope.$apply();
+                }
+            });
+        } else {
+            $scope.showError = true;
+            $scope.$apply();
+        };
+    };
+
+    //Logout method
+    $scope.logout = function () {
+        fireBaseData.ref().unauth();
+        $scope.showLoginForm = true;
     };
 })
 
-.controller('LoginCtrl', function ($scope, $firebase) {
-    var ref = new Firebase("https://threadstsa.firebaseio.com");
-    ref.createUser({
-        email: 'helo',
-        passowrd: 'jihi'
-    }, function(error){
-        if(error == null){
-            console.log("User created successfully.");
-        }else{
-            console.log("Error creating user: ", error);
-        }
-    });
+.controller('ThreadViewController', function ($scope) {
+    //    $scope.thread = $scope.feeds.get($stateParams.feedId);
+    //    $scope.thread = $scope.feed.feedId;
 });

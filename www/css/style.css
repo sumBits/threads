@@ -1,1 +1,27 @@
 /* Empty. Add your own CSS if you like */
+
+.error.ng-hide-add.ng-hide-add-active,
+.error.ng-hide-remove.ng-hide-remove-active {
+    display: block !important;
+    -webkit-transition: all linear 0.3s;
+    transition: all linear 0.3s;
+}
+
+.error.ng-hide {
+    height: 0;
+    opacity: 0;
+    padding: 0;
+}
+
+.loginForm.ng-hide-add.ng-hide-add-active,
+.loginForm.ng-hide-remove.ng-hide-remove-active {
+    display: block !important;
+    -webkit-transition: all linear 0.3s;
+    transition: all linear 0.3s;
+}
+
+.loginForm.ng-hide {
+    height: 0;
+    opacity: 0;
+    padding: 0;
+}
