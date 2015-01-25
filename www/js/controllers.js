@@ -76,13 +76,10 @@ angular.module('starter.controllers', ['firebase'])
     }
 
     //Login method
-<<<<<<< HEAD
     $scope.login = function (em, pwd) {
         console.log(em);
         console.log(pwd);
-=======
     $scope.login = function(em, pwd){
->>>>>>> origin/master
         fireBaseData.ref().authWithPassword({
             email: em,
             password: pwd
