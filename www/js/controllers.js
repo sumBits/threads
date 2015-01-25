@@ -46,16 +46,23 @@ angular.module('starter.controllers', ['firebase'])
         userThread.title = "";
         userThread.desc = "";
     }
-    
-    $scope.joinThread = function(thread){
+
+    $scope.joinThread = function (thread) {
         var childRef = new Firebase("https://threadstsa.firebaseio.com/userThreads/" + thread.$id + "/members");
         childRef.push($scope.user.password.email);
     }
-    
-    $scope.checkIfMember = function(thread){
+
+    $scope.checkIfMember = function (thread) {
         var childRef = new Firebase("https://threadstsa.firebaseio.com/userThreads/" + thread.$id + "/members");
         var exists = false;
-        
+        childRef.on('value', function (snapshot) {
+            snapshot.forEach(function (secondSnapshot) {
+                if($scope.user.password.email === secondSnapshot.val()){
+                    console.log("You are a member;");
+                    exists = true;    
+                }
+            });
+        });
         return exists;
     }
 })
