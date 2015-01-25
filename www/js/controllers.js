@@ -103,6 +103,7 @@ angular.module('starter.controllers', ['firebase'])
         $scope.showLoginForm = true;
     };
 
+}
 })
 
 .controller('ThreadViewController', function ($scope) {
