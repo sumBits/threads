@@ -17,6 +17,12 @@
         <div class="card loginForm" ng-hide="showLoginForm">
             <div class="item item-text-wrap">You are logged in as {{user.password.email}}</div>
         </div>
+        <div>
+               <a class="item item-icon-left positive" href="#/tab/license">
+                <i class="icon ion-ios7-arrow-forward"></i>
+                License
+            </a>
+        </div>
         <button class="button button-block button-positive" ng-click="logout()" ng-hide="showLoginForm">Logout</button>
     </ion-content>
 </ion-view>

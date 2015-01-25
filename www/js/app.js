@@ -103,6 +103,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
                 controller: 'AccountCtrl'
             }
         }
+    })
+    .state('tab/license',{
+        url: '/license',
+        views: {
+            'tab-account-license': {
+                templateurl: 'templates/tab-license.html'
+                //controler: 'AccountCtrl'
+            }
+        }
     });
     
     // if none of the above states are matched, use this as the fallback
