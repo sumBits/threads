@@ -103,6 +103,11 @@ angular.module('starter.controllers', ['firebase'])
         };
 
     }
+    //Logout method
+    $scope.logout = function () {
+        fireBaseData.ref().unauth();
+        $scope.showLoginForm = true;
+    };
 })
 
 .controller('ThreadViewController', function ($scope) {
