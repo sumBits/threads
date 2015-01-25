@@ -58,7 +58,6 @@ angular.module('starter.controllers', ['firebase'])
         childRef.on('value', function (snapshot) {
             snapshot.forEach(function (secondSnapshot) {
                 if($scope.user.password.email === secondSnapshot.val()){
-                    console.log("You are a member;");
                     exists = true;    
                 }
             });
@@ -95,24 +94,29 @@ angular.module('starter.controllers', ['firebase'])
 
     //Login method
     $scope.login = function (em, pwd) {
-        fireBaseData.ref().authWithPassword({
-            email: em,
-            password: pwd
-        }, function (error, authData) {
-            if (error === null) {
-                $scope.showError = false;
-                console.log("User ID: " + authData.uid + ", Provider: " + authData.provider);
-                $scope.user = fireBaseData.ref().getAuth();
-                $scope.showLoginForm = false;
-                $scope.login.em = null;
-                $scope.login.pwd = null;
-                $scope.$apply();
-            } else {
-                console.log("Error authenticating user: ", error);
-                $scope.showError = true;
-                $scope.$apply();
-            }
-        });
+        if (em && pwd) {
+            fireBaseData.ref().authWithPassword({
+                email: em,
+                password: pwd
+            }, function (error, authData) {
+                if (error === null) {
+                    $scope.showError = false;
+                    console.log("User ID: " + authData.uid + ", Provider: " + authData.provider);
+                    $scope.user = fireBaseData.ref().getAuth();
+                    $scope.showLoginForm = false;
+                    $scope.login.em = null;
+                    $scope.login.pwd = null;
+                    $scope.$apply();
+                } else {
+                    console.log("Error authenticating user: ", error);
+                    $scope.showError = true;
+                    $scope.$apply();
+                }
+            });
+        } else {
+            $scope.showError = true;
+            $scope.$apply();
+        };
     };
 
     //Logout method
