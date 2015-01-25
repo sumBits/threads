@@ -107,9 +107,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     .state('tab/license',{
         url: '/license',
         views: {
-            'tab-license': {
-                templateUrl: 'templates/tab-license.html'
-                // controller: 'LicenseCtrl'
+            'tab-account-license': {
+                templateurl: 'templates/tab-license.html'
+                //controler: 'AccountCtrl'
             }
         }
     });
