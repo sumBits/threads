@@ -93,27 +93,11 @@ angular.module('starter.controllers', ['firebase'])
         }
     }
     $scope.findDistance = function (thread) {
-        var rad = function (x) {
-            return x * Math.PI / 180;
-        };
-        var getDistance = function (p1, p2) {
-            console.log(p1.D, p1.k);
-            console.log(p2.D, p2.k);
-            var R = 6378137; // Earth’s mean radius in meter
-            var dLat = rad(p2.D - p1.D);
-            var dLong = rad(p2.k - p1.k);
-            var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-                Math.cos(rad(p1.lat())) * Math.cos(rad(p2.lat())) *
-                Math.sin(dLong / 2) * Math.sin(dLong / 2);
-            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-            var d = R * c;
-            return d; // returns the distance in meter
-        };
-        var pos;
+//        console.log(thread.location);
 
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function (position) {
-                pos = new google.maps.LatLng(position.coords.latitude,
+                $scope.pos = new google.maps.LatLng(position.coords.latitude,
                     position.coords.longitude);
             }, function () {
                 handleNoGeolocation(true);
@@ -130,7 +114,18 @@ angular.module('starter.controllers', ['firebase'])
                 var content = 'Error: Your browser doesn\'t support geolocation.';
             }
         }
-        console.log(getDistance(pos, thread.location));
+        var rad = function (x) {
+            return x * Math.PI / 180;
+        };
+        var R = 6378137; // Earth’s mean radius in meter
+        var dLat = rad(thread.location.D - pos.D);
+        var dLong = rad(thread.location.k - pos.k);
+        var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(rad(thread.location.D)) * Math.cos(rad(pos.D)) *
+            Math.sin(dLong / 2) * Math.sin(dLong / 2);
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        var d = R * c;
+        console.log(d);
     }
 
 })
