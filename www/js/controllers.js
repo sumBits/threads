@@ -33,7 +33,7 @@ angular.module('starter.controllers', ['firebase'])
     }
 
     $scope.add = function (thread) {
-        if(thread.title && thread.desc) {
+        if (thread.title && thread.desc) {
             $scope.userThreads.$add({
                 user: $scope.user,
                 title: thread.title,
@@ -45,7 +45,6 @@ angular.module('starter.controllers', ['firebase'])
             thread.title = "";
             thread.desc = "";
         }
-        
     }
 })
 
@@ -80,7 +79,7 @@ angular.module('starter.controllers', ['firebase'])
     }
 
     $scope.add = function (thread) {
-        if(thread.title && thread.desc) {
+        if (thread.title && thread.desc) {
             $scope.nearbyThreads.$add({
                 user: $scope.user,
                 title: thread.title,
@@ -93,6 +92,47 @@ angular.module('starter.controllers', ['firebase'])
             thread.desc = "";
         }
     }
+    $scope.findDistance = function (thread) {
+        var rad = function (x) {
+            return x * Math.PI / 180;
+        };
+        var getDistance = function (p1, p2) {
+            console.log(p1.D, p1.k);
+            console.log(p2.D, p2.k);
+            var R = 6378137; // Earth’s mean radius in meter
+            var dLat = rad(p2.D - p1.D);
+            var dLong = rad(p2.k - p1.k);
+            var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(rad(p1.lat())) * Math.cos(rad(p2.lat())) *
+                Math.sin(dLong / 2) * Math.sin(dLong / 2);
+            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            var d = R * c;
+            return d; // returns the distance in meter
+        };
+        var pos;
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                pos = new google.maps.LatLng(position.coords.latitude,
+                    position.coords.longitude);
+            }, function () {
+                handleNoGeolocation(true);
+            });
+        } else {
+            // Browser doesn't support Geolocation
+            handleNoGeolocation(false);
+        }
+
+        function handleNoGeolocation(errorFlag) {
+            if (errorFlag) {
+                var content = 'Error: The Geolocation service failed.';
+            } else {
+                var content = 'Error: Your browser doesn\'t support geolocation.';
+            }
+        }
+        console.log(getDistance(pos, thread.location));
+    }
+
 })
 
 .controller('ChatDetailCtrl', function ($scope, $stateParams, Chats) {
