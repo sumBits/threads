@@ -113,6 +113,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
                 }
             }
         });
+    .state('tab.camera', {
+        url: '/camera',
+        views: {
+            'tab-account': {
+                templateUrl: 'templates/tab-license.html',
+                controler: 'CameraCtrl'
 
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/tab/dash');

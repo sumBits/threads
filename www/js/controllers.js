@@ -2,6 +2,12 @@
 
 angular.module('starter.controllers', ['firebase', 'ngCordova'])
 
+//camera ctrl
+.controller('CameraCtrl', fucntion ($scope, $firebase, fireBaseData) {
+    var ref = new Firebase("https://threadstsa.firebaseio.com/photos/");
+    var sync = $firebase(ref);
+});
+
 .controller('DashCtrl', function ($scope, $firebase, fireBaseData) {
 
     var ref = new Firebase("https://threadstsa.firebaseio.com/userThreads/");
