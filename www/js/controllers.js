@@ -33,17 +33,19 @@ angular.module('starter.controllers', ['firebase'])
     }
 
     $scope.add = function (thread) {
-        $scope.userThreads.$add({
-            user: $scope.user,
-            title: thread.title,
-            desc: thread.desc,
-            location: pos,
-            date: 0,
-            category: 'Soon to come'
-        });
-
-        thread.title = "";
-        thread.desc = "";
+        if(thread.title && thread.desc) {
+            $scope.userThreads.$add({
+                user: $scope.user,
+                title: thread.title,
+                desc: thread.desc,
+                location: pos,
+                date: 0,
+                category: 'Soon to come'
+            });
+            thread.title = "";
+            thread.desc = "";
+        }
+        
     }
 })
 
@@ -78,17 +80,18 @@ angular.module('starter.controllers', ['firebase'])
     }
 
     $scope.add = function (thread) {
-        $scope.nearbyThreads.$add({
-            user: $scope.user,
-            title: thread.title,
-            desc: thread.desc,
-            location: pos,
-            date: 0,
-            category: 'Soon to come'
-        });
-        
-        thread.title = "";
-        thread.desc = "";
+        if(thread.title && thread.desc) {
+            $scope.nearbyThreads.$add({
+                user: $scope.user,
+                title: thread.title,
+                desc: thread.desc,
+                location: pos,
+                date: 0,
+                category: 'Soon to come'
+            });
+            thread.title = "";
+            thread.desc = "";
+        }
     }
 })
 
