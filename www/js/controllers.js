@@ -3,13 +3,16 @@
 angular.module('starter.controllers', ['firebase'])
 
 .controller('DashCtrl', function ($scope, $firebase, fireBaseData) {
-
     var ref = new Firebase("https://threadstsa.firebaseio.com/userThreads/");
     var sync = $firebase(ref);
 
     $scope.user = fireBaseData.ref().getAuth();
 
     $scope.userThreads = sync.$asArray();
+
+    $scope.$watch('userThreads', function () {
+        console.log("It changed");
+    })
 
     var pos;
     //fix later, doesn't work yet
@@ -66,7 +69,7 @@ angular.module('starter.controllers', ['firebase'])
         if (!exists) {
             childRef = new Firebase("https://threadstsa.firebaseio.com/userThreads/" + thread.$id + "/creator");
             childRef.on('value', function (snapshot) {
-                if($scope.user.password.email === snapshot.val()){
+                if ($scope.user.password.email === snapshot.val()) {
                     exists = true;
                 }
             });
@@ -134,8 +137,9 @@ angular.module('starter.controllers', ['firebase'])
         fireBaseData.ref().unauth();
         $scope.showLoginForm = true;
         $scope.hideCreateaccount = false;
+        $scope.$apply();
     };
-    
+
     //create account please help 
     /*
 $scope.showCreateaccount = function() {
@@ -161,7 +165,7 @@ $scope.showCreateaccount = function() {
       }
     ]
   });
- */       
+ */
 })
 
 .controller('ThreadViewController', function ($scope) {
