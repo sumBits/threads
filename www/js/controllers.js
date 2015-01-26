@@ -90,7 +90,7 @@ angular.module('starter.controllers', ['firebase'])
     $scope.friends = Friends.all();
 })
 
-.controller('FriendDetailCtrl', function ($scope, $stateParams, Friends) {
+.controller('FriendDetailCtrl', function ($scope, $stateParams, Friends, $ionicPopup) {
     $scope.friend = Friends.get($stateParams.friendId);
 })
 
@@ -110,6 +110,7 @@ angular.module('starter.controllers', ['firebase'])
             }, function (error, authData) {
                 if (error === null) {
                     $scope.showError = false;
+                    $scope.hideCreateaccount = true;
                     console.log("User ID: " + authData.uid + ", Provider: " + authData.provider);
                     $scope.user = fireBaseData.ref().getAuth();
                     $scope.showLoginForm = false;
@@ -132,7 +133,35 @@ angular.module('starter.controllers', ['firebase'])
     $scope.logout = function () {
         fireBaseData.ref().unauth();
         $scope.showLoginForm = true;
+        $scope.hideCreateaccount = false;
     };
+    
+    //create account please help 
+    /*
+$scope.showCreateaccount = function() {
+    var myPopup = $ionicPopup.show({
+        template: <input type="text" ng-model="help username???",
+        template: <input type="email" ng-model="idk what this is",
+        template: <input type="passowrd" ng-model="serioiusly what is this",
+        title: 'Create Account',
+        scope: $scope,
+         buttons: [
+      { text: 'Cancel' },
+      {
+        text: '<b>Save</b>',
+        type: 'button-positive',
+        onTap: function(e) {
+          if (!$scope.data.wifi) {
+            //don't allow the user to close unless he enters wifi password
+            e.preventDefault();
+          } else {
+            return $scope.data.wifi;
+          }
+        }
+      }
+    ]
+  });
+ */       
 })
 
 .controller('ThreadViewController', function ($scope) {
