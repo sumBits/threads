@@ -66,7 +66,7 @@ angular.module('starter.controllers', ['firebase'])
         if (!exists) {
             childRef = new Firebase("https://threadstsa.firebaseio.com/userThreads/" + thread.$id + "/creator");
             childRef.on('value', function (snapshot) {
-                if($scope.user.password.email === snapshot.val()){
+                if ($scope.user.password.email === snapshot.val()) {
                     exists = true;
                 }
             });
@@ -103,6 +103,32 @@ angular.module('starter.controllers', ['firebase'])
 
     //Login method
     $scope.login = function (em, pwd) {
+        loginFunction(em,pwd);
+    };
+
+    //Logout method
+    $scope.logout = function () {
+        fireBaseData.ref().unauth();
+        $scope.showLoginForm = true;
+        $scope.hideCreateaccount = false;
+    };
+
+
+    $scope.createAccount = function (em, pwd) {
+        fireBaseData.ref().createUser({
+            email: em,
+            password: pwd
+        }, function (error) {
+            if (error == null) {
+                console.log("User created successfully.");
+                loginFunction(em, pwd);
+            } else {
+                console.log("Error creating user: ", error);
+            }
+        });
+    };
+    
+    var loginFunction = function(em, pwd){
         if (em && pwd) {
             fireBaseData.ref().authWithPassword({
                 email: em,
@@ -110,7 +136,6 @@ angular.module('starter.controllers', ['firebase'])
             }, function (error, authData) {
                 if (error === null) {
                     $scope.showError = false;
-                    $scope.hideCreateaccount = true;
                     console.log("User ID: " + authData.uid + ", Provider: " + authData.provider);
                     $scope.user = fireBaseData.ref().getAuth();
                     $scope.showLoginForm = false;
@@ -125,43 +150,9 @@ angular.module('starter.controllers', ['firebase'])
             });
         } else {
             $scope.showError = true;
-            $scope.$apply();
         };
-    };
+    }
 
-    //Logout method
-    $scope.logout = function () {
-        fireBaseData.ref().unauth();
-        $scope.showLoginForm = true;
-        $scope.hideCreateaccount = false;
-    };
-    
-    //create account please help 
-    /*
-$scope.showCreateaccount = function() {
-    var myPopup = $ionicPopup.show({
-        template: <input type="text" ng-model="help username???",
-        template: <input type="email" ng-model="idk what this is",
-        template: <input type="passowrd" ng-model="serioiusly what is this",
-        title: 'Create Account',
-        scope: $scope,
-         buttons: [
-      { text: 'Cancel' },
-      {
-        text: '<b>Save</b>',
-        type: 'button-positive',
-        onTap: function(e) {
-          if (!$scope.data.wifi) {
-            //don't allow the user to close unless he enters wifi password
-            e.preventDefault();
-          } else {
-            return $scope.data.wifi;
-          }
-        }
-      }
-    ]
-  });
- */       
 })
 
 .controller('ThreadViewController', function ($scope) {
