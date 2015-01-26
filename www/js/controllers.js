@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('starter.controllers', ['firebase'])
+angular.module('starter.controllers', ['firebase', 'ngCordova'])
 
 .controller('DashCtrl', function ($scope, $firebase, fireBaseData) {
 
