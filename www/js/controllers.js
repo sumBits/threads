@@ -12,7 +12,6 @@ angular.module('starter.controllers', ['firebase'])
     $scope.userThreads = sync.$asArray();
 
     var pos;
-    //fix later, doesn't work yet
 
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
@@ -33,21 +32,22 @@ angular.module('starter.controllers', ['firebase'])
             var content = 'Error: Your browser doesn\'t support geolocation.';
         }
     }
-
     $scope.add = function (userThread) {
-        $scope.userThreads.$add({
-            creator: $scope.user.password.email,
-            title: userThread.title,
-            desc: userThread.desc,
-            location: pos,
-            date: 0,
-            category: 'Soon to come'
-        });
+        if (thread.title && thread.desc) {
 
-        userThread.title = "";
-        userThread.desc = "";
+            $scope.userThreads.$add({
+                creator: $scope.user.password.email,
+                title: userThread.title,
+                desc: userThread.desc,
+                location: pos,
+                date: 0,
+                category: 'Soon to come'
+            })
+            thread.title = "";
+            thread.desc = "";
+        }
     }
-
+    
     $scope.joinThread = function (thread) {
         var childRef = new Firebase("https://threadstsa.firebaseio.com/userThreads/" + thread.$id + "/members");
         childRef.push($scope.user.password.email);
@@ -75,11 +75,85 @@ angular.module('starter.controllers', ['firebase'])
     }
 })
 
-.controller('ChatsCtrl', function ($scope, Chats) {
-    $scope.chats = Chats.all();
-    $scope.remove = function (chat) {
-        Chats.remove(chat);
+.controller('ChatsCtrl', function ($scope, $firebase, fireBaseData) {
+    var ref = new Firebase("https://threadstsa.firebaseio.com/nearbyThreads/");
+    var sync = $firebase(ref);
+
+    $scope.user = fireBaseData.ref().getAuth();
+
+    $scope.nearbyThreads = sync.$asArray();
+
+    var pos;
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            pos = new google.maps.LatLng(position.coords.latitude,
+                position.coords.longitude);
+        }, function () {
+            handleNoGeolocation(true);
+        });
+    } else {
+        // Browser doesn't support Geolocation
+        handleNoGeolocation(false);
     }
+
+    function handleNoGeolocation(errorFlag) {
+        if (errorFlag) {
+            var content = 'Error: The Geolocation service failed.';
+        } else {
+            var content = 'Error: Your browser doesn\'t support geolocation.';
+        }
+    }
+    $scope.add = function (thread) {
+        if (thread.title && thread.desc) {
+            $scope.nearbyThreads.$add({
+                creator: $scope.user.password.email,
+                title: userThread.title,
+                desc: userThread.desc,
+                location: pos,
+                date: 0,
+                category: 'Soon to come'
+            });
+            thread.title = "";
+            thread.desc = "";
+        }
+    }
+    $scope.findDistance = function (thread) {
+        //        console.log(thread.location);
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                $scope.pos = new google.maps.LatLng(position.coords.latitude,
+                    position.coords.longitude);
+            }, function () {
+                handleNoGeolocation(true);
+            });
+        } else {
+            // Browser doesn't support Geolocation
+            handleNoGeolocation(false);
+        }
+
+        function handleNoGeolocation(errorFlag) {
+            if (errorFlag) {
+                var content = 'Error: The Geolocation service failed.';
+            } else {
+                var content = 'Error: Your browser doesn\'t support geolocation.';
+            }
+        }
+        var rad = function (x) {
+            return x * Math.PI / 180;
+        };
+        var R = 6378137; // Earth’s mean radius in meter
+        var dLat = rad(thread.location.D - pos.D);
+        var dLong = rad(thread.location.k - pos.k);
+        var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(rad(thread.location.D)) * Math.cos(rad(pos.D)) *
+            Math.sin(dLong / 2) * Math.sin(dLong / 2);
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        var d = R * c;
+        console.log(d);
+    }
+
 })
 
 .controller('ChatDetailCtrl', function ($scope, $stateParams, Chats) {
@@ -103,7 +177,7 @@ angular.module('starter.controllers', ['firebase'])
 
     //Login method
     $scope.login = function (em, pwd) {
-        loginFunction(em,pwd);
+        loginFunction(em, pwd);
     };
 
     //Logout method
@@ -127,8 +201,8 @@ angular.module('starter.controllers', ['firebase'])
             }
         });
     };
-    
-    var loginFunction = function(em, pwd){
+
+    var loginFunction = function (em, pwd) {
         if (em && pwd) {
             fireBaseData.ref().authWithPassword({
                 email: em,
