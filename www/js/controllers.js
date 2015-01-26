@@ -229,7 +229,10 @@ angular.module('starter.controllers', ['firebase'])
 
 })
 
-.controller('ThreadViewController', function ($scope) {
-    //    $scope.thread = $scope.feeds.get($stateParams.feedId);
-    //    $scope.thread = $scope.feed.feedId;
+.controller('ThreadViewController', function ($scope, $firebase) {
+    
+    $scope.sumbitPost = function(content){
+        var ref = new Firebase("https://threadstsa.firebaseio.com/userThreads/");
+    }; 
+    
 });
