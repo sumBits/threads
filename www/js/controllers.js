@@ -94,6 +94,7 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
     })
 
 .controller('ChatsCtrl', function ($scope, $firebase, fireBaseData) {
+    var ref = new Firebase("https://threadstsa.firebaseio.com/nearbyThreads/categories");
     var pos;
     var onSuccess = function (position) {
         pos = new google.maps.LatLng(position.coords.latitude,
