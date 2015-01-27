@@ -3,13 +3,16 @@
 angular.module('starter.controllers', ['firebase'])
 
 .controller('DashCtrl', function ($scope, $firebase, fireBaseData) {
-
     var ref = new Firebase("https://threadstsa.firebaseio.com/userThreads/");
     var sync = $firebase(ref);
 
     $scope.user = fireBaseData.ref().getAuth();
 
     $scope.userThreads = sync.$asArray();
+
+    $scope.$watch('userThreads', function () {
+        console.log("It changed");
+    })
 
     var pos;
 
@@ -47,7 +50,7 @@ angular.module('starter.controllers', ['firebase'])
             thread.desc = "";
         }
     }
-    
+
     $scope.joinThread = function (thread) {
         var childRef = new Firebase("https://threadstsa.firebaseio.com/userThreads/" + thread.$id + "/members");
         childRef.push($scope.user.password.email);
