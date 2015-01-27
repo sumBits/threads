@@ -99,7 +99,6 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
     var onSuccess = function (position) {
         pos = new google.maps.LatLng(position.coords.latitude,
             position.coords.longitude);
-        console.log(pos);
     };
 
     // onError Callback receives a PositionError object
@@ -137,7 +136,6 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
         var onSuccess = function (position) {
             pos = new google.maps.LatLng(position.coords.latitude,
                 position.coords.longitude);
-            console.log(pos);
             distance(pos, thread);
         };
 
@@ -168,8 +166,14 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
             var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
             var d = R * c; //to km
-
-            console.log(d); //display the distance between the two points
+            var dis = 1;
+            if (d < dis) {
+                console.log(thread.title + "less than " + dis);
+                return false;
+            } else {
+                console.log(thread.title + " more than " + dis);
+                return true;
+            }
         }
     }
 

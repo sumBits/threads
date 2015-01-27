@@ -34,16 +34,21 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         url: "/tab",
         abstract: true,
         templateUrl: "templates/tabs.html",
-        controller: function ($rootScope, $scope, fireBaseData) {
+        controller: function ($rootScope, $scope, $firebase, fireBaseData) {
+
             $scope.user = fireBaseData.ref().getAuth();
             if ($scope.user) {
                 console.log("Logged In");
                 $scope.showThreadAdd = false; //checks if the user has logged in; if true, the user is not logged in and the login form will be displayed
-//                $scope.$apply();
+                //                $scope.$apply();
+                var ref = null;
+                var ref = new Firebase("https://threadstsa.firebaseio.com/userThreads/");
+                var sync = $firebase(ref);
+
             } else {
                 $scope.showThreadAdd = true;
                 console.log("logged out.");
-//                $scope.$apply();
+                //                $scope.$apply();
             }
             $rootScope.$on("$locationChangeSuccess", function (args) {
                 console.log("Changed States");
@@ -52,14 +57,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
                     console.log("Logged In");
                     $scope.showThreadAdd = false;
                     $scope.showLogin = false;
-                    
+
                     //checks if the user has logged in; if true, the user is not logged in and the login form will be displayed
-//                    $scope.$apply();
+                    //                    $scope.$apply();
                 } else {
                     $scope.showThreadAdd = true;
                     $scope.showLogin = true;
                     console.log("logged out.");
-//                    $scope.$apply();
+                    //                    $scope.$apply();
                 }
 
             })

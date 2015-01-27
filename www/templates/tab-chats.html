@@ -4,8 +4,8 @@
 <!--
         <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
 -->
-        <div class="list card" ng-repeat="thread in nearbyThreads" ng-hide="findDistance(thread)<10">
-            <a class="item item-avatar" ng-click="findDistance(thread)">
+        <div class="list card" ng-repeat="thread in nearbyThreads" ng-hide="findDistance(thread)">
+            <a class="item item-avatar">
                 <img src="http://ionicframework.com/img/ionic-logo-blog.png">
                 <h2>{{thread.title}}</h2>
                 <p>{{thread.desc}}</p>
