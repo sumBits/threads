@@ -14,12 +14,12 @@
             </label>
             <button class="button button-block button-assertive" ng-click="login(login.em,login.pwd)">Login</button>
         </div>
-        <div class="card loginForm" ng-hide="showLoginForm">
+        <div class="card loginForm" ng-hide="showLoginForm" type="item-text-wrap">
             <div class="item item-text-wrap">You are logged in as {{user.password.email}}</div>
         </div>
         <button class="button button-block button-assertive" ng-click="logout()" ng-hide="showLoginForm">Logout</button>
-        <div>
-            <button class="button button-outline button-positive" ng-click="createAccount(login.em, login.pwd)" ng-show="showLoginForm">
+        <div type="item-text-wrap">
+            <button class="button button-block button-outline button-positive" ng-click="createAccount(login.em, login.pwd)" ng-show="showLoginForm" type="item-text-wrap">
                 Don't have an account? Enter an email and password above and click here.
             </button>
         </div>
