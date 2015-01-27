@@ -36,7 +36,7 @@ angular.module('starter.controllers', ['firebase'])
         }
     }
     $scope.add = function (userThread) {
-        if (thread.title && thread.desc) {
+        if (userThread.title && userThread.desc) {
 
             $scope.userThreads.$add({
                 creator: $scope.user.password.email,
@@ -232,10 +232,12 @@ angular.module('starter.controllers', ['firebase'])
 
 })
 
-.controller('ThreadViewController', function ($scope, $firebase) {
-
-    $scope.sumbitPost = function (content) {
+.controller('ThreadViewCtrl', function ($scope, $firebase) {
+    
+    $scope.sumbitPost = function(content){
+//        console.log("Param: ", $stateParams.threadId);
+        console.log("Hello");
         var ref = new Firebase("https://threadstsa.firebaseio.com/userThreads/");
-    };
-
-});
+    }; 
+    
+})
