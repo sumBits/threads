@@ -26,30 +26,6 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
         })
 
 
-
-        navigator.geolocation.getCurrentPosition(onSuccess, onError);
-
-        //    if (navigator.geolocation) {
-        //        navigator.geolocation.getCurrentPosition(function (position) {
-        //            pos = new google.maps.LatLng(position.coords.latitude,
-        //                position.coords.longitude);
-        //        }, function () {
-        //            handleNoGeolocation(true);
-        //        });
-        //    } else {
-        //        // Browser doesn't support Geolocation
-        //        handleNoGeolocation(false);
-        //        pos = 0;
-        //    }
-        //
-        //    function handleNoGeolocation(errorFlag) {
-        //        if (errorFlag) {
-        //            var content = 'Error: The Geolocation service failed.';
-        //        } else {
-        //            var content = 'Error: Your browser doesn\'t support geolocation.';
-        //        }
-        //    }
-
         $scope.add = function (userThread) {
             if (userThread.title && userThread.desc) {
 
@@ -93,8 +69,17 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
         }
     })
 
-.controller('ChatsCtrl', function ($scope, $firebase, fireBaseData) {
+.controller('NearbyCtrl', function ($scope, $firebase, fireBaseData) {
     var ref = new Firebase("https://threadstsa.firebaseio.com/nearbyThreads/categories");
+    var sync = $firebase(ref);
+    $scope.user = fireBaseData.ref().getAuth();
+    $scope.categories = sync.$asArray();
+
+})
+
+.controller('CategoryCtrl', function ($scope, $stateParams, $firebase, fireBaseData) {
+    console.log($stateParams.categoryId);
+    var ref = new Firebase("https://threadstsa.firebaseio.com/nearbyThreads/categories/" + $stateParams.categoryId);
     var pos;
     var onSuccess = function (position) {
         pos = new google.maps.LatLng(position.coords.latitude,
@@ -108,26 +93,25 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
             'message: ' + error.message + '\n');
     }
     navigator.geolocation.getCurrentPosition(onSuccess, onError);
-    var ref = new Firebase("https://threadstsa.firebaseio.com/nearbyThreads/");
     var sync = $firebase(ref);
 
     $scope.user = fireBaseData.ref().getAuth();
 
     $scope.nearbyThreads = sync.$asArray();
 
-    $scope.add = function (userThread) {
+    $scope.add = function (nearbyThread) {
 
-        if (userThread.title && userThread.desc) {
+        if (nearbyThread.title && nearbyThread.desc) {
             $scope.nearbyThreads.$add({
                 creator: $scope.user.password.email,
-                title: userThread.title,
-                desc: userThread.desc,
+                title: nearbyThread.title,
+                desc: nearbyThread.desc,
                 location: pos,
                 date: 0,
                 category: 'Soon to come'
             });
-            userThread.title = "";
-            userThread.desc = "";
+            nearbyThread.title = "";
+            nearbyThread.desc = "";
         }
     }
     $scope.findDistance = function (thread) {
@@ -177,21 +161,6 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
         }
     }
 
-})
-
-.controller('ChatDetailCtrl', function ($scope, $stateParams, $firebase) {
-    var a = $stateParams.threadId;
-    console.log(a);
-    var ref = new Firebase("https://threadstsa.firebaseio.com/nearbyThreads/" + a + "/comments/");
-    var sync = $firebase(ref);
-    $scope.comments = sync.$asArray();
-
-    $scope.submitPost = function (post) {
-        $scope.comments.$add({
-            user: $scope.user.password.email,
-            message: post.content
-        });
-    };
 })
 
 .controller('FriendsCtrl', function ($scope, Friends) {

@@ -1,15 +1,21 @@
-<ion-view view-title="Local Threads">
-    <ion-content overflow-scroll="true">
+<!--
+  This template loads for the 'tab.friend-detail' state (app.js)
+  'friend' is a $scope variable created in the FriendsCtrl controller (controllers.js)
+  The FriendsCtrl pulls data from the Friends service (service.js)
+  The Friends service returns an array of friend data
+-->
+<ion-view view-title="{{category}}">
+    <ion-content class="padding" overflow-scroll="true">
         <div id="map-canvas"></div>
 <!--
         <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
 -->
         <div class="list card" ng-repeat="thread in nearbyThreads" ng-hide="findDistance(thread)">
-            <a class="item item-avatar">
+            <div class="item item-avatar">
                 <img src="http://ionicframework.com/img/ionic-logo-blog.png">
                 <h2>{{thread.title}}</h2>
                 <p>{{thread.desc}}</p>
-            </a>
+            </div>
         </div>
         <form ng-hide="showThreadAdd">
             <div class="list list-inset">
@@ -24,8 +30,8 @@
                 </button>
             </div>
         </form>
-        <div class = "list card">
-            
+        <div class="list card">
+
         </div>
     </ion-content>
 </ion-view>
