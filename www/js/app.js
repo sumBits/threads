@@ -50,10 +50,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
                 $scope.user = fireBaseData.ref().getAuth();
                 if ($scope.user) {
                     console.log("Logged In");
-                    $scope.showThreadAdd = false; //checks if the user has logged in; if true, the user is not logged in and the login form will be displayed
+                    $scope.showThreadAdd = false;
+                    $scope.showLogin = false;
+                    
+                    //checks if the user has logged in; if true, the user is not logged in and the login form will be displayed
 //                    $scope.$apply();
                 } else {
                     $scope.showThreadAdd = true;
+                    $scope.showLogin = true;
                     console.log("logged out.");
 //                    $scope.$apply();
                 }

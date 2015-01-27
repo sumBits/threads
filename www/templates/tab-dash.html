@@ -1,8 +1,11 @@
 <ion-view view-title="Your Threads">
     <ion-content class="padding" overflow-scroll="true">
+       <div class="card" ng-show="showLogin">
+            <div class="item item-text-wrap">You should login</div>
+        </div>
         <div class="list card" ng-repeat="thread in userThreads" type="item-text-wrap" href="#/tab/userThreads/{{thread.title}}">
             <div class="item item-avatar">
-                <img src="../img/ionic.png">
+                <img src="http://ionicframework.com/img/ionic-logo-blog.png">
                 <h2>{{thread.title}}</h2>
                 <p>{{thread.desc}}</p>
             </div>

@@ -11,7 +11,7 @@
                 <p>{{thread.desc}}</p>
             </a>
         </div>
-        <form>
+        <form ng-hide="showThreadAdd">
             <div class="list list-inset">
                 <label class="item item-input">
                     <input type="text" placeholder="Title" ng-model="nearbyThread.title">
