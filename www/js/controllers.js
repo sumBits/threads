@@ -1,97 +1,97 @@
 'use strict';
 
 angular.module('starter.controllers', ['firebase', 'ngCordova'])
-.controller('DashCtrl', function ($scope, $firebase, fireBaseData, $cordovaGeolocation) {
-    var ref = new Firebase("https://threadstsa.firebaseio.com/userThreads/");
-    var sync = $firebase(ref);
-    var pos;
-    var onSuccess = function (position) {
-        pos = new google.maps.LatLng(position.coords.latitude,
-            position.coords.longitude);
-    };
+    .controller('DashCtrl', function ($scope, $firebase, fireBaseData, $cordovaGeolocation) {
+        var ref = new Firebase("https://threadstsa.firebaseio.com/userThreads/");
+        var sync = $firebase(ref);
+        var pos;
+        var onSuccess = function (position) {
+            pos = new google.maps.LatLng(position.coords.latitude,
+                position.coords.longitude);
+        };
 
-    // onError Callback receives a PositionError object
-    //
-    function onError(error) {
-        alert('code: ' + error.code + '\n' +
-            'message: ' + error.message + '\n');
-    }
-
-    $scope.user = fireBaseData.ref().getAuth();
-
-    $scope.userThreads = sync.$asArray();
-
-    $scope.$watch('userThreads', function () {
-        console.log("It changed");
-    })
-
-
-
-    navigator.geolocation.getCurrentPosition(onSuccess, onError);
-
-    //    if (navigator.geolocation) {
-    //        navigator.geolocation.getCurrentPosition(function (position) {
-    //            pos = new google.maps.LatLng(position.coords.latitude,
-    //                position.coords.longitude);
-    //        }, function () {
-    //            handleNoGeolocation(true);
-    //        });
-    //    } else {
-    //        // Browser doesn't support Geolocation
-    //        handleNoGeolocation(false);
-    //        pos = 0;
-    //    }
-    //
-    //    function handleNoGeolocation(errorFlag) {
-    //        if (errorFlag) {
-    //            var content = 'Error: The Geolocation service failed.';
-    //        } else {
-    //            var content = 'Error: Your browser doesn\'t support geolocation.';
-    //        }
-    //    }
-
-    $scope.add = function (userThread) {
-        if (userThread.title && userThread.desc) {
-
-            $scope.userThreads.$add({
-                creator: $scope.user.password.email,
-                title: userThread.title,
-                desc: userThread.desc,
-                location: pos,
-                date: 0,
-                category: 'Soon to come'
-            })
-            userThread.title = "";
-            userThread.desc = "";
+        // onError Callback receives a PositionError object
+        //
+        function onError(error) {
+            alert('code: ' + error.code + '\n' +
+                'message: ' + error.message + '\n');
         }
-    }
 
-    $scope.joinThread = function (thread) {
-        var childRef = new Firebase("https://threadstsa.firebaseio.com/userThreads/" + thread.$id + "/members");
-        childRef.push($scope.user.password.email);
-    }
+        $scope.user = fireBaseData.ref().getAuth();
 
-    $scope.checkIfMember = function (thread) {
-        var childRef = new Firebase("https://threadstsa.firebaseio.com/userThreads/" + thread.$id + "/members");
-        var exists = false;
-        childRef.on('value', function (snapshot) {
-            snapshot.forEach(function (secondSnapshot) {
-                if ($scope.user.password.email === secondSnapshot.val()) {
-                    exists = true;
-                }
-            });
-        });
-        if (!exists) {
-            childRef = new Firebase("https://threadstsa.firebaseio.com/userThreads/" + thread.$id + "/creator");
+        $scope.userThreads = sync.$asArray();
+
+        $scope.$watch('userThreads', function () {
+            console.log("It changed");
+        })
+
+
+
+        navigator.geolocation.getCurrentPosition(onSuccess, onError);
+
+        //    if (navigator.geolocation) {
+        //        navigator.geolocation.getCurrentPosition(function (position) {
+        //            pos = new google.maps.LatLng(position.coords.latitude,
+        //                position.coords.longitude);
+        //        }, function () {
+        //            handleNoGeolocation(true);
+        //        });
+        //    } else {
+        //        // Browser doesn't support Geolocation
+        //        handleNoGeolocation(false);
+        //        pos = 0;
+        //    }
+        //
+        //    function handleNoGeolocation(errorFlag) {
+        //        if (errorFlag) {
+        //            var content = 'Error: The Geolocation service failed.';
+        //        } else {
+        //            var content = 'Error: Your browser doesn\'t support geolocation.';
+        //        }
+        //    }
+
+        $scope.add = function (userThread) {
+            if (userThread.title && userThread.desc) {
+
+                $scope.userThreads.$add({
+                    creator: $scope.user.password.email,
+                    title: userThread.title,
+                    desc: userThread.desc,
+                    location: pos,
+                    date: 0,
+                    category: 'Soon to come'
+                })
+                userThread.title = "";
+                userThread.desc = "";
+            }
+        }
+
+        $scope.joinThread = function (thread) {
+            var childRef = new Firebase("https://threadstsa.firebaseio.com/userThreads/" + thread.$id + "/members");
+            childRef.push($scope.user.password.email);
+        }
+
+        $scope.checkIfMember = function (thread) {
+            var childRef = new Firebase("https://threadstsa.firebaseio.com/userThreads/" + thread.$id + "/members");
+            var exists = false;
             childRef.on('value', function (snapshot) {
-                if ($scope.user.password.email === snapshot.val()) {
-                    exists = true;
-                }
+                snapshot.forEach(function (secondSnapshot) {
+                    if ($scope.user.password.email === secondSnapshot.val()) {
+                        exists = true;
+                    }
+                });
             });
+            if (!exists) {
+                childRef = new Firebase("https://threadstsa.firebaseio.com/userThreads/" + thread.$id + "/creator");
+                childRef.on('value', function (snapshot) {
+                    if ($scope.user.password.email === snapshot.val()) {
+                        exists = true;
+                    }
+                });
+            }
+            return exists;
         }
-        return exists;
-    }
-})
+    })
 
 .controller('ChatsCtrl', function ($scope, $firebase, fireBaseData) {
     var pos;
@@ -167,7 +167,7 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
             var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
             var d = R * c; //to km
-            
+
             console.log(d); //display the distance between the two points
         }
     }
