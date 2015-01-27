@@ -96,7 +96,7 @@ angular.module('starter.services', [])
   }
 })
 .factory('fireBaseData', function($firebase) {
-    var ref = new Firebase("https://threadstsa.firebaseio.com/feeds/");
+    var ref = new Firebase("https://threadstsa.firebaseio.com/");
     return {
         ref: function() {
             return ref;

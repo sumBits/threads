@@ -15,7 +15,6 @@ angular.module('starter.controllers', ['firebase'])
     })
 
     var pos;
-    //fix later, doesn't work yet
 
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
@@ -36,19 +35,20 @@ angular.module('starter.controllers', ['firebase'])
             var content = 'Error: Your browser doesn\'t support geolocation.';
         }
     }
-
     $scope.add = function (userThread) {
-        $scope.userThreads.$add({
-            creator: $scope.user.password.email,
-            title: userThread.title,
-            desc: userThread.desc,
-            location: pos,
-            date: 0,
-            category: 'Soon to come'
-        });
+        if (thread.title && thread.desc) {
 
-        userThread.title = "";
-        userThread.desc = "";
+            $scope.userThreads.$add({
+                creator: $scope.user.password.email,
+                title: userThread.title,
+                desc: userThread.desc,
+                location: pos,
+                date: 0,
+                category: 'Soon to come'
+            })
+            thread.title = "";
+            thread.desc = "";
+        }
     }
 
     $scope.joinThread = function (thread) {
@@ -78,11 +78,85 @@ angular.module('starter.controllers', ['firebase'])
     }
 })
 
-.controller('ChatsCtrl', function ($scope, Chats) {
-    $scope.chats = Chats.all();
-    $scope.remove = function (chat) {
-        Chats.remove(chat);
+.controller('ChatsCtrl', function ($scope, $firebase, fireBaseData) {
+    var ref = new Firebase("https://threadstsa.firebaseio.com/nearbyThreads/");
+    var sync = $firebase(ref);
+
+    $scope.user = fireBaseData.ref().getAuth();
+
+    $scope.nearbyThreads = sync.$asArray();
+
+    var pos;
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            pos = new google.maps.LatLng(position.coords.latitude,
+                position.coords.longitude);
+        }, function () {
+            handleNoGeolocation(true);
+        });
+    } else {
+        // Browser doesn't support Geolocation
+        handleNoGeolocation(false);
     }
+
+    function handleNoGeolocation(errorFlag) {
+        if (errorFlag) {
+            var content = 'Error: The Geolocation service failed.';
+        } else {
+            var content = 'Error: Your browser doesn\'t support geolocation.';
+        }
+    }
+    $scope.add = function (thread) {
+        if (thread.title && thread.desc) {
+            $scope.nearbyThreads.$add({
+                creator: $scope.user.password.email,
+                title: userThread.title,
+                desc: userThread.desc,
+                location: pos,
+                date: 0,
+                category: 'Soon to come'
+            });
+            thread.title = "";
+            thread.desc = "";
+        }
+    }
+    $scope.findDistance = function (thread) {
+        //        console.log(thread.location);
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                $scope.pos = new google.maps.LatLng(position.coords.latitude,
+                    position.coords.longitude);
+            }, function () {
+                handleNoGeolocation(true);
+            });
+        } else {
+            // Browser doesn't support Geolocation
+            handleNoGeolocation(false);
+        }
+
+        function handleNoGeolocation(errorFlag) {
+            if (errorFlag) {
+                var content = 'Error: The Geolocation service failed.';
+            } else {
+                var content = 'Error: Your browser doesn\'t support geolocation.';
+            }
+        }
+        var rad = function (x) {
+            return x * Math.PI / 180;
+        };
+        var R = 6378137; // Earth’s mean radius in meter
+        var dLat = rad(thread.location.D - pos.D);
+        var dLong = rad(thread.location.k - pos.k);
+        var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(rad(thread.location.D)) * Math.cos(rad(pos.D)) *
+            Math.sin(dLong / 2) * Math.sin(dLong / 2);
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        var d = R * c;
+        console.log(d);
+    }
+
 })
 
 .controller('ChatDetailCtrl', function ($scope, $stateParams, Chats) {
@@ -106,6 +180,32 @@ angular.module('starter.controllers', ['firebase'])
 
     //Login method
     $scope.login = function (em, pwd) {
+        loginFunction(em, pwd);
+    };
+
+    //Logout method
+    $scope.logout = function () {
+        fireBaseData.ref().unauth();
+        $scope.showLoginForm = true;
+        $scope.hideCreateaccount = false;
+    };
+
+
+    $scope.createAccount = function (em, pwd) {
+        fireBaseData.ref().createUser({
+            email: em,
+            password: pwd
+        }, function (error) {
+            if (error == null) {
+                console.log("User created successfully.");
+                loginFunction(em, pwd);
+            } else {
+                console.log("Error creating user: ", error);
+            }
+        });
+    };
+
+    var loginFunction = function (em, pwd) {
         if (em && pwd) {
             fireBaseData.ref().authWithPassword({
                 email: em,
@@ -113,7 +213,6 @@ angular.module('starter.controllers', ['firebase'])
             }, function (error, authData) {
                 if (error === null) {
                     $scope.showError = false;
-                    $scope.hideCreateaccount = true;
                     console.log("User ID: " + authData.uid + ", Provider: " + authData.provider);
                     $scope.user = fireBaseData.ref().getAuth();
                     $scope.showLoginForm = false;
@@ -128,47 +227,15 @@ angular.module('starter.controllers', ['firebase'])
             });
         } else {
             $scope.showError = true;
-            $scope.$apply();
         };
-    };
+    }
 
-    //Logout method
-    $scope.logout = function () {
-        fireBaseData.ref().unauth();
-        $scope.showLoginForm = true;
-        $scope.hideCreateaccount = false;
-        $scope.$apply();
-    };
-
-    //create account please help 
-    /*
-$scope.showCreateaccount = function() {
-    var myPopup = $ionicPopup.show({
-        template: <input type="text" ng-model="help username???",
-        template: <input type="email" ng-model="idk what this is",
-        template: <input type="passowrd" ng-model="serioiusly what is this",
-        title: 'Create Account',
-        scope: $scope,
-         buttons: [
-      { text: 'Cancel' },
-      {
-        text: '<b>Save</b>',
-        type: 'button-positive',
-        onTap: function(e) {
-          if (!$scope.data.wifi) {
-            //don't allow the user to close unless he enters wifi password
-            e.preventDefault();
-          } else {
-            return $scope.data.wifi;
-          }
-        }
-      }
-    ]
-  });
- */
 })
 
-.controller('ThreadViewController', function ($scope) {
-    //    $scope.thread = $scope.feeds.get($stateParams.feedId);
-    //    $scope.thread = $scope.feed.feedId;
+.controller('ThreadViewController', function ($scope, $firebase) {
+
+    $scope.sumbitPost = function (content) {
+        var ref = new Firebase("https://threadstsa.firebaseio.com/userThreads/");
+    };
+
 });
