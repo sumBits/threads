@@ -4,7 +4,7 @@
 <!--
         <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
 -->
-        <div class="list card" ng-repeat="thread in nearbyThreads">
+        <div class="list card" ng-repeat="thread in nearbyThreads" ng-hide="findDistance(thread)<10">
             <a class="item item-avatar" ng-click="findDistance(thread)">
                 <img src="http://ionicframework.com/img/ionic-logo-blog.png">
                 <h2>{{thread.title}}</h2>
@@ -19,7 +19,7 @@
                 <label class="item item-input">
                     <input type="text" placeholder="Description" ng-model="nearbyThread.desc">
                 </label>
-                <button class="button button-block button-royal" ng-click="add(nearbyThread)">
+                <button class="button button-block button-assertive" ng-click="add(nearbyThread)">
                     Add Thread Nearby
                 </button>
             </div>

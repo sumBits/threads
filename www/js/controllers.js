@@ -150,18 +150,26 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
         navigator.geolocation.getCurrentPosition(onSuccess, onError);
         var distance = function (pos, thread) {
             var rad = function (x) {
-                return x * (Math.PI / 180);
+                return x * (Math.PI / 180); //convert degrees to radians
             };
-            var R = 6371; // Earth’s mean radius in meter
-            var dLat = rad(thread.location.D - pos.D);
-            var dLong = rad(thread.location.k - pos.k);
-            var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-                Math.cos(rad(thread.location.D)) * Math.cos(rad(pos.D)) *
-                Math.sin(dLong / 2) * Math.sin(dLong / 2);
+            var R = 6371; // Earth's mean radius in meters
+            var lat1 = thread.location.k;
+            var lat2 = pos.k;
+            var lon1 = thread.location.D;
+            var lon2 = pos.D;
+            var φ1 = rad(lat1); //lat1
+            var φ2 = rad(lat2); //lat2
+            var Δφ = rad(lat2 - lat1); //lat
+            var Δλ = rad(lon2 - lon1); //lon
+
+            var a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+                Math.cos(φ1) * Math.cos(φ2) *
+                Math.sin(Δλ / 2) * Math.sin(Δλ / 2); //the distance between two coordinates
             var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-            var d = R * c;
-            console.log(d);
-            console.log(thread.location);
+
+            var d = R * c; //to km
+            
+            console.log(d); //display the distance between the two points
         }
     }
 
@@ -246,7 +254,7 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
     var ref = new Firebase("https://threadstsa.firebaseio.com/userThreads/" + a + "/comments/");
     var sync = $firebase(ref);
     $scope.comments = sync.$asArray();
-    
+
     $scope.submitPost = function (post) {
         $scope.comments.$add({
             user: $scope.user.password.email,
