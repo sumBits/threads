@@ -1,14 +1,21 @@
 <ion-view view-title="{{thread.title}}" class="has-header" hi>
-  <ion-content class="has-header"  padding="false">
-
-  <div class = "item item-input-inset">
-      <label class = "item-input-wrapper">
-          <input type="text" placeholder="Type something here..." maxlength = "140" ng-model = "post.content">
-      </label>
-      <button class = "button button-small" ng-click="submitPost(post.content)">
-          Post
-      </button>
-  </div>
-
-  </ion-content>
+    <ion-content class="has-header" padding="false">
+        <div class="list" ng-repeat="comment in comments">
+            <a class="item item-avatar" href="#">
+                <img src="../img/ionic.png">
+                <h2>{{comment.user}}</h2>
+                <p>{{comment.message}}</p>
+            </a>
+        </div>
+        <form>
+            <div class="item item-input-inset">
+                <label class="item-input-wrapper">
+                    <input type="text" placeholder="Type something here..." maxlength="140" ng-model="post.content">
+                </label>
+                <button class="button button-small" ng-click="submitPost(post)">
+                    Post
+                </button>
+            </div>
+        </form>
+    </ion-content>
 </ion-view>

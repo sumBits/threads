@@ -241,10 +241,16 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
 })
 
 .controller('ThreadViewCtrl', function ($scope, $firebase, $stateParams) {
-
-    $scope.sumbitPost = function (content) {
-        console.log("Hello");
-        var ref = new Firebase("https://threadstsa.firebaseio.com/userThreads/");
+    var a = $stateParams.threadId;
+    console.log(a);
+    var ref = new Firebase("https://threadstsa.firebaseio.com/userThreads/" + a + "/comments/");
+    var sync = $firebase(ref);
+    $scope.comments = sync.$asArray();
+    
+    $scope.submitPost = function (post) {
+        $scope.comments.$add({
+            user: $scope.user.password.email,
+            message: post.content
+        });
     };
-
 })
