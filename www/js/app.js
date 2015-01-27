@@ -104,11 +104,20 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
             }
         }
     })
-    .state('tab.license',{
+    .state('tab.license', {
         url: '/license',
         views: {
             'tab-account': {
                 templateUrl: 'templates/tab-license.html',
+                controler: 'AccountCtrl'
+            }
+        }
+    })
+    .state('tab.form', {
+        url: '/form',
+        views: {
+            'tab-account': {
+                templateUrl: 'templates/tab-form.html',
                 controler: 'AccountCtrl'
             }
         }
