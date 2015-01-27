@@ -133,39 +133,36 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
     }
     $scope.findDistance = function (thread) {
         //        console.log(thread.location);
-
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function (position) {
-                $scope.pos = new google.maps.LatLng(position.coords.latitude,
-                    position.coords.longitude);
-            }, function () {
-                handleNoGeolocation(true);
-            });
-        } else {
-            // Browser doesn't support Geolocation
-            handleNoGeolocation(false);
-        }
-
-
-        function handleNoGeolocation(errorFlag) {
-            if (errorFlag) {
-                var content = 'Error: The Geolocation service failed.';
-            } else {
-                var content = 'Error: Your browser doesn\'t support geolocation.';
-            }
-        }
-        var rad = function (x) {
-            return x * Math.PI / 180;
+        var pos;
+        var onSuccess = function (position) {
+            pos = new google.maps.LatLng(position.coords.latitude,
+                position.coords.longitude);
+            console.log(pos);
+            distance(pos, thread);
         };
-        var R = 6378.137; // Earth’s mean radius in meter
-        var dLat = rad(thread.location.D - pos.D);
-        var dLong = rad(thread.location.k - pos.k);
-        var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-            Math.cos(rad(thread.location.D)) * Math.cos(rad(pos.D)) *
-            Math.sin(dLong / 2) * Math.sin(dLong / 2);
-        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        var d = R * c;
-        console.log(d);
+
+        // onError Callback receives a PositionError object
+        //
+        function onError(error) {
+            alert('code: ' + error.code + '\n' +
+                'message: ' + error.message + '\n');
+        }
+        navigator.geolocation.getCurrentPosition(onSuccess, onError);
+        var distance = function (pos, thread) {
+            var rad = function (x) {
+                return x * (Math.PI / 180);
+            };
+            var R = 6371; // Earth’s mean radius in meter
+            var dLat = rad(thread.location.D - pos.D);
+            var dLong = rad(thread.location.k - pos.k);
+            var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(rad(thread.location.D)) * Math.cos(rad(pos.D)) *
+                Math.sin(dLong / 2) * Math.sin(dLong / 2);
+            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            var d = R * c;
+            console.log(d);
+            console.log(thread.location);
+        }
     }
 
 })
