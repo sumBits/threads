@@ -62,8 +62,8 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
                 date: 0,
                 category: 'Soon to come'
             })
-            thread.title = "";
-            thread.desc = "";
+            userThread.title = "";
+            userThread.desc = "";
         }
     }
 

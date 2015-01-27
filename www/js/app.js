@@ -51,7 +51,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
                 if ($scope.user) {
                     console.log("Logged In");
                     $scope.showThreadAdd = false; //checks if the user has logged in; if true, the user is not logged in and the login form will be displayed
-                    $scope.$apply();
+//                    $scope.$apply();
                 } else {
                     $scope.showThreadAdd = true;
                     console.log("logged out.");
