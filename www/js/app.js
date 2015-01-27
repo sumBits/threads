@@ -52,7 +52,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         views: {
             'tab-dash': {
                 templateUrl: 'templates/tab-thread.html',
-                controller: 'ThreadViewController'
+                controller: 'ThreadViewCtrl'
             }
         }
     })
