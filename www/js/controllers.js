@@ -174,7 +174,7 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
 
 })
 
-.controller('ChatDetailCtrl', function ($scope, $stateParams) {
+.controller('ChatDetailCtrl', function ($scope, $stateParams, $firebase) {
     var a = $stateParams.threadId;
     console.log(a);
     var ref = new Firebase("https://threadstsa.firebaseio.com/nearbyThreads/" + a + "/comments/");
