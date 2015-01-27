@@ -232,10 +232,9 @@ angular.module('starter.controllers', ['firebase'])
 
 })
 
-.controller('ThreadViewCtrl', function ($scope, $firebase) {
+.controller('ThreadViewCtrl', function ($scope, $firebase, $stateParams) {
     
     $scope.sumbitPost = function(content){
-//        console.log("Param: ", $stateParams.threadId);
         console.log("Hello");
         var ref = new Firebase("https://threadstsa.firebaseio.com/userThreads/");
     }; 
