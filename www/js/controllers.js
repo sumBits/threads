@@ -1,10 +1,22 @@
 'use strict';
 
-angular.module('starter.controllers', ['firebase'])
+angular.module('starter.controllers', ['firebase', 'ngCordova'])
 
-.controller('DashCtrl', function ($scope, $firebase, fireBaseData) {
+.controller('DashCtrl', function ($scope, $firebase, fireBaseData, $cordovaGeolocation) {
     var ref = new Firebase("https://threadstsa.firebaseio.com/userThreads/");
     var sync = $firebase(ref);
+    var pos;
+    var onSuccess = function (position) {
+        pos = new google.maps.LatLng(position.coords.latitude,
+            position.coords.longitude);
+    };
+
+    // onError Callback receives a PositionError object
+    //
+    function onError(error) {
+        alert('code: ' + error.code + '\n' +
+            'message: ' + error.message + '\n');
+    }
 
     $scope.user = fireBaseData.ref().getAuth();
 
@@ -14,27 +26,31 @@ angular.module('starter.controllers', ['firebase'])
         console.log("It changed");
     })
 
-    var pos;
 
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function (position) {
-            pos = new google.maps.LatLng(position.coords.latitude,
-                position.coords.longitude);
-        }, function () {
-            handleNoGeolocation(true);
-        });
-    } else {
-        // Browser doesn't support Geolocation
-        handleNoGeolocation(false);
-    }
 
-    function handleNoGeolocation(errorFlag) {
-        if (errorFlag) {
-            var content = 'Error: The Geolocation service failed.';
-        } else {
-            var content = 'Error: Your browser doesn\'t support geolocation.';
-        }
-    }
+    navigator.geolocation.getCurrentPosition(onSuccess, onError);
+
+    //    if (navigator.geolocation) {
+    //        navigator.geolocation.getCurrentPosition(function (position) {
+    //            pos = new google.maps.LatLng(position.coords.latitude,
+    //                position.coords.longitude);
+    //        }, function () {
+    //            handleNoGeolocation(true);
+    //        });
+    //    } else {
+    //        // Browser doesn't support Geolocation
+    //        handleNoGeolocation(false);
+    //        pos = 0;
+    //    }
+    //
+    //    function handleNoGeolocation(errorFlag) {
+    //        if (errorFlag) {
+    //            var content = 'Error: The Geolocation service failed.';
+    //        } else {
+    //            var content = 'Error: Your browser doesn\'t support geolocation.';
+    //        }
+    //    }
+
     $scope.add = function (userThread) {
         if (userThread.title && userThread.desc) {
 
@@ -79,6 +95,20 @@ angular.module('starter.controllers', ['firebase'])
 })
 
 .controller('ChatsCtrl', function ($scope, $firebase, fireBaseData) {
+    var pos;
+    var onSuccess = function (position) {
+        pos = new google.maps.LatLng(position.coords.latitude,
+            position.coords.longitude);
+        console.log(pos);
+    };
+
+    // onError Callback receives a PositionError object
+    //
+    function onError(error) {
+        alert('code: ' + error.code + '\n' +
+            'message: ' + error.message + '\n');
+    }
+    navigator.geolocation.getCurrentPosition(onSuccess, onError);
     var ref = new Firebase("https://threadstsa.firebaseio.com/nearbyThreads/");
     var sync = $firebase(ref);
 
@@ -86,29 +116,9 @@ angular.module('starter.controllers', ['firebase'])
 
     $scope.nearbyThreads = sync.$asArray();
 
-    var pos;
+    $scope.add = function (userThread) {
 
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function (position) {
-            pos = new google.maps.LatLng(position.coords.latitude,
-                position.coords.longitude);
-        }, function () {
-            handleNoGeolocation(true);
-        });
-    } else {
-        // Browser doesn't support Geolocation
-        handleNoGeolocation(false);
-    }
-
-    function handleNoGeolocation(errorFlag) {
-        if (errorFlag) {
-            var content = 'Error: The Geolocation service failed.';
-        } else {
-            var content = 'Error: Your browser doesn\'t support geolocation.';
-        }
-    }
-    $scope.add = function (thread) {
-        if (thread.title && thread.desc) {
+        if (userThread.title && userThread.desc) {
             $scope.nearbyThreads.$add({
                 creator: $scope.user.password.email,
                 title: userThread.title,
@@ -117,8 +127,8 @@ angular.module('starter.controllers', ['firebase'])
                 date: 0,
                 category: 'Soon to come'
             });
-            thread.title = "";
-            thread.desc = "";
+            userThread.title = "";
+            userThread.desc = "";
         }
     }
     $scope.findDistance = function (thread) {
@@ -136,6 +146,7 @@ angular.module('starter.controllers', ['firebase'])
             handleNoGeolocation(false);
         }
 
+
         function handleNoGeolocation(errorFlag) {
             if (errorFlag) {
                 var content = 'Error: The Geolocation service failed.';
@@ -146,7 +157,7 @@ angular.module('starter.controllers', ['firebase'])
         var rad = function (x) {
             return x * Math.PI / 180;
         };
-        var R = 6378137; // Earth’s mean radius in meter
+        var R = 6378.137; // Earth’s mean radius in meter
         var dLat = rad(thread.location.D - pos.D);
         var dLong = rad(thread.location.k - pos.k);
         var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
@@ -233,10 +244,10 @@ angular.module('starter.controllers', ['firebase'])
 })
 
 .controller('ThreadViewCtrl', function ($scope, $firebase, $stateParams) {
-    
-    $scope.sumbitPost = function(content){
+
+    $scope.sumbitPost = function (content) {
         console.log("Hello");
         var ref = new Firebase("https://threadstsa.firebaseio.com/userThreads/");
-    }; 
-    
+    };
+
 })
