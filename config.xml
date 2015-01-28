@@ -31,4 +31,7 @@
     <feature name="http://api.phonegap.com/1.0/network" />
     <feature name="http://api.phonegap.com/1.0/notification" />
     <icon src="icon.png" />
+    <gap:plugin name="com.google.cordova.admob" source="plugins.cordova.io" />
+    <gap:plugin name="com.cordova.cordova.device" source="plugins.cordova.io" />
+    <gap:plugin name="com.cordova.cordova.media" source="plugins.cordova.io" />
 </widget>
