@@ -90,7 +90,7 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
 })
 
 .controller('CategoryCtrl', function ($scope, $stateParams, $firebase, fireBaseData) {
-    console.log($stateParams.categoryId);
+    $scope.category = $stateParams.categoryId;
     var ref = new Firebase("https://threadstsa.firebaseio.com/nearbyThreads/categories/" + $stateParams.categoryId);
     var pos;
     var onSuccess = function (position) {
