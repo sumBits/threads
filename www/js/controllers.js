@@ -127,7 +127,7 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
             nearbyThread.desc = "";
         }
     }
-    $scope.findDistance = function (thread) {
+    $scope.findDistance = function (thread, $scope) {
         //        console.log(thread.location);
         var pos;
         var onSuccess = function (position) {
@@ -143,7 +143,7 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
                 'message: ' + error.message + '\n');
         }
         navigator.geolocation.getCurrentPosition(onSuccess, onError);
-        var distance = function (pos, thread) {
+        var distance = function (pos, thread, $scope) {
             var rad = function (x) {
                 return x * (Math.PI / 180); //convert degrees to radians
             };
@@ -156,6 +156,7 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
             var φ2 = rad(lat2); //lat2
             var Δφ = rad(lat2 - lat1); //lat
             var Δλ = rad(lon2 - lon1); //lon
+            var id = thread.id;
 
             var a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
                 Math.cos(φ1) * Math.cos(φ2) *
@@ -166,9 +167,11 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
             var dis = 1;
             if (d < dis) {
                 console.log(thread.title + "less than " + dis);
+                $scope.id = false;
                 return false;
             } else {
                 console.log(thread.title + " more than " + dis);
+                $scope.id = false;
                 return true;
             }
         }

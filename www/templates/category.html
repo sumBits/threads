@@ -10,13 +10,13 @@
         <!--
         <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
 -->
-            <div class="list card" ng-repeat="thread in nearbyThreads" ng-hide="findDistance(thread)">
-                <div class="item item-avatar">
+            <ul class="list" ng-repeat="thread in nearbyThreads" ng-hide="{{thread.id}} findDistance(thread, $scope)">
+                <li class="item item-avatar">
                     <img src="http://ionicframework.com/img/ionic-logo-blog.png">
                     <h2>{{thread.title}}</h2>
                     <p>{{thread.desc}}</p>
-                </div>
-            </div>
+                </li>
+            </ul>
             <form ng-hide="showThreadAdd">
                 <div class="list list-inset">
                     <label class="item item-input">
