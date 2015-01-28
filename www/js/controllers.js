@@ -129,7 +129,7 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
         thread.votes++;
         $scope.nearbyThreads.$save(thread);
     }
-    $scope.findDistance = function (thread, $scope) {
+    $scope.findDistance = function (thread) {
         //        console.log(thread.location);
         var pos;
         var onSuccess = function (position) {
@@ -249,9 +249,9 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
 })
 
 .controller('ThreadViewCtrl', function ($scope, $firebase, $stateParams) {
-    var a = $stateParams.threadId;
-    console.log(a);
-    var ref = new Firebase("https://threadstsa.firebaseio.com/userThreads/" + a + "/comments/");
+    var thread = $stateParams.threadId;
+    console.log(thread);
+    var ref = new Firebase("https://threadstsa.firebaseio.com/userThreads/" + thread + "/comments/");
     var sync = $firebase(ref);
     $scope.comments = sync.$asArray();
 
