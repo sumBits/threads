@@ -8,6 +8,7 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
         var onSuccess = function (position) {
             pos = new google.maps.LatLng(position.coords.latitude,
                 position.coords.longitude);
+            console.log(pos);
         };
 
         // onError Callback receives a PositionError object
@@ -16,6 +17,7 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
             alert('code: ' + error.code + '\n' +
                 'message: ' + error.message + '\n');
         }
+        navigator.geolocation.getCurrentPosition(onSuccess, onError);
 
         $scope.user = fireBaseData.ref().getAuth();
 
@@ -28,7 +30,6 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
 
         $scope.add = function (userThread) {
             if (userThread.title && userThread.desc) {
-
                 $scope.userThreads.$add({
                     creator: $scope.user.password.email,
                     title: userThread.title,
@@ -242,7 +243,12 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
     $scope.submitPost = function (post) {
         $scope.comments.$add({
             user: $scope.user.password.email,
-            message: post.content
+            message: post.content,
+            votes: 0
         });
     };
+    $scope.addVote = function (comment) {
+        comment.votes++;
+        $scope.comments.$save(comment);
+    }
 })
