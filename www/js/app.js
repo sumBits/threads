@@ -39,11 +39,13 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 
 
             $scope.user = fireBaseData.ref().getAuth();
+            console.log($scope.user + "User");
             if ($scope.user) {
                 console.log("Logged In");
                 $scope.showThreadAdd = false; //checks if the user has logged in; if true, the user is not logged in and the login form will be displayed
                 //                $scope.$apply();
                 var ref = null;
+                var sync = null;
                 var ref = new Firebase("https://threadstsa.firebaseio.com/userThreads/");
                 var sync = $firebase(ref);
 
