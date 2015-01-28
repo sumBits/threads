@@ -83,7 +83,7 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
                 Entertainment: "thread",
                 Shopping: "thread",
                 Weather: "thread",
-                Gasoline: "thread"
+                Education: "thread"
             });
         }
     });
