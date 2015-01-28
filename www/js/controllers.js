@@ -107,11 +107,11 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
     }
     navigator.geolocation.getCurrentPosition(onSuccess, onError);
     var sync = $firebase(ref);
-    
+
     $scope.user = fireBaseData.ref().getAuth();
 
     $scope.nearbyThreads = sync.$asArray();
-    
+
     $scope.add = function (nearbyThread) {
 
         if (nearbyThread.desc) {
@@ -120,11 +120,16 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
                 desc: nearbyThread.desc,
                 location: pos,
                 date: 0,
-                category: 'Soon to come'
+                category: 'Soon to come',
+                votes: 0
             });
             nearbyThread.title = "";
             nearbyThread.desc = "";
         }
+    }
+    $scope.addVote = function (thread) {
+        thread.votes++;
+        $scope.nearbyThreads.$save(thread);
     }
     $scope.findDistance = function (thread, $scope) {
         //        console.log(thread.location);
@@ -259,8 +264,5 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
             votes: 0
         });
     };
-    $scope.addVote = function (comment) {
-        comment.votes++;
-        $scope.comments.$save(comment);
-    }
+
 })

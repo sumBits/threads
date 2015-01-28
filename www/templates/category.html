@@ -15,6 +15,8 @@
                 <img src="http://ionicframework.com/img/ionic-logo-blog.png">
                 <p>{{thread.creator}}</p>
                 <h2>{{thread.desc}}</h2>
+                <p>{{thread.votes}} Votes</p>
+                <button class="button button-assertive" ng-click="addVote(thread)">Vote!</button>
             </li>
         </ul>
         <form ng-hide="showThreadAdd">
