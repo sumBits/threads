@@ -36,7 +36,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         templateUrl: "templates/tabs.html",
         controller: function ($rootScope, $scope, $firebase, fireBaseData) {
 
-            
+
 
             $scope.user = fireBaseData.ref().getAuth();
             if ($scope.user) {
@@ -139,6 +139,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
                 'tab-account': {
                     templateUrl: 'templates/tab-form.html',
                     controler: 'AccountCtrl'
+                }
+            }
+        })
+        .state('tab.rules', {
+            url: '/rules',
+            views: {
+                'tab-account': {
+                    templateUrl: 'templates/tab-rules.html',
+                    controler: 'Account Ctrl'
+
                 }
             }
         });
