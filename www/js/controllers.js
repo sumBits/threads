@@ -114,10 +114,9 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
     
     $scope.add = function (nearbyThread) {
 
-        if (nearbyThread.title && nearbyThread.desc) {
+        if (nearbyThread.desc) {
             $scope.nearbyThreads.$add({
                 creator: $scope.user.password.email,
-                title: nearbyThread.title,
                 desc: nearbyThread.desc,
                 location: pos,
                 date: 0,
@@ -166,12 +165,10 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
             var d = R * c; //to km
             var dis = 1;
             if (d < dis) {
-                console.log(thread.title + "less than " + dis);
-                $scope.id = false;
+                console.log(thread.desc + "less than " + dis);
                 return false;
             } else {
-                console.log(thread.title + " more than " + dis);
-                $scope.id = false;
+                console.log(thread.desc + " more than " + dis);
                 return true;
             }
         }
