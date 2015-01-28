@@ -1,5 +1,6 @@
 {
     "jscodehints.detectedExclusions": [
-        "C:/Users/Sam/Documents/GitHub/threads/gulpfile.js"
+        "C:/Users/Sam/Documents/GitHub/threads/gulpfile.js",
+        "C:/Users/Sam/Documents/GitHub/threads/plugins/org.apache.cordova.camera/www/blackberry10/assets/camera.js"
     ]
 }
