@@ -75,16 +75,18 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
     var sync = $firebase(ref);
     $scope.user = fireBaseData.ref().getAuth();
     $scope.categories = sync.$asArray();
-    console.log($scope.categories.length);
-    if ($scope.categories.length == 0) {
-        ref.set({
-            Food: "thread",
-            Entertainment: "thread",
-            Shopping: "thread",
-            Weather: "thread",
-            Gasoline:"thread"
-        });
-    }
+    ref.on('value', function (snapshot) {
+        console.log(snapshot.val());
+        if (snapshot.val() == null) {
+            ref.set({
+                Food: "thread",
+                Entertainment: "thread",
+                Shopping: "thread",
+                Weather: "thread",
+                Gasoline: "thread"
+            });
+        }
+    });
 
 })
 
