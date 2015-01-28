@@ -261,6 +261,8 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
             message: post.content,
             votes: 0
         });
+        post.content = null;
+        $scope.$apply();
     };
 
 })
