@@ -36,6 +36,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         templateUrl: "templates/tabs.html",
         controller: function ($rootScope, $scope, $firebase, fireBaseData) {
 
+            
+
             $scope.user = fireBaseData.ref().getAuth();
             if ($scope.user) {
                 console.log("Logged In");
