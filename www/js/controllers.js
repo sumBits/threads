@@ -36,7 +36,6 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
                     desc: userThread.desc,
                     location: pos,
                     date: 0,
-                    category: 'Soon to come'
                 })
                 userThread.title = "";
                 userThread.desc = "";
@@ -120,7 +119,6 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
                 desc: nearbyThread.desc,
                 location: pos,
                 date: 0,
-                category: 'Soon to come',
                 votes: 0
             });
             nearbyThread.title = "";
