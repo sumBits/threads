@@ -107,11 +107,11 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
     }
     navigator.geolocation.getCurrentPosition(onSuccess, onError);
     var sync = $firebase(ref);
-
+    
     $scope.user = fireBaseData.ref().getAuth();
 
     $scope.nearbyThreads = sync.$asArray();
-
+    
     $scope.add = function (nearbyThread) {
 
         if (nearbyThread.title && nearbyThread.desc) {
