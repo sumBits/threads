@@ -1,5 +1,15 @@
 <ion-view view-title="{{thread.title}}" class="has-header" hi>
-    <ion-content class="has-header" padding="false" overflow-scroll="true">
+    <form style="position: absolute; bottom: 45px; width: 100%">
+        <div class="item item-input-inset">
+            <label class="item-input-wrapper">
+                <input type="text" placeholder="Type something here..." maxlength="140" ng-model="post.content">
+            </label>
+            <button class="button button-small" ng-click="submitPost(post)">
+                Post
+            </button>
+        </div>
+    </form>
+    <ion-content class="has-header chat" padding="false" overflow-scroll="true">
         <div class="list" ng-repeat="comment in comments">
             <a class="item item-text-wrap item-avatar" href="#">
                 <img src="http://ionicframework.com/img/ionic-logo-blog.png">
@@ -7,15 +17,6 @@
                 <p>{{comment.message}}</p>
             </a>
         </div>
-        <form>
-            <div class="item item-input-inset">
-                <label class="item-input-wrapper">
-                    <input type="text" placeholder="Type something here..." maxlength="140" ng-model="post.content">
-                </label>
-                <button class="button button-small" ng-click="submitPost(post)">
-                    Post
-                </button>
-            </div>
-        </form>
+
     </ion-content>
 </ion-view>

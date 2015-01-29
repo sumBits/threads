@@ -5,7 +5,18 @@
   The Friends service returns an array of friend data
 -->
 <ion-view view-title="{{category}}">
-    <ion-content class="padding" overflow-scroll="true">
+
+    <form ng-hide="showThreadAdd" style="position: absolute; bottom: 45px; width: 100%">
+        <div class="item item-input-inset">
+            <label class="item-input-wrapper">
+                <input type="text" placeholder="Type something here..." maxlength="140" ng-model="nearbyThread.desc">
+            </label>
+            <button class="button button-small" ng-click="add(nearbyThread)">
+                Post
+            </button>
+        </div>
+    </form>
+    <ion-content class="padding chat" overflow-scroll="true">
         <div id="map-canvas"></div>
         <!--
         <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
@@ -19,15 +30,5 @@
                 <button class="button button-assertive" ng-click="addVote(thread)">Vote!</button>
             </li>
         </ul>
-        <form ng-hide="showThreadAdd">
-            <div class="item item-input-inset">
-                <label class="item-input-wrapper">
-                    <input type="text" placeholder="Type something here..." maxlength="140" ng-model="nearbyThread.desc">
-                </label>
-                <button class="button button-small" ng-click="add(nearbyThread)">
-                    Post
-                </button>
-            </div>
-        </form>
     </ion-content>
 </ion-view>
