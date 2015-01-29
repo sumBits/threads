@@ -175,7 +175,6 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
                 if ($scope.show) {
                     localThreadsCopy.add(thread);
                     $scope.copy = localThreadsCopy.get();
-                    //                    console.log(localThreadsCopy.get());
                 } else {
                     localThreadsCopy.remove(thread);
                 }
