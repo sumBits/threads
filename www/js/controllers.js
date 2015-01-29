@@ -132,11 +132,10 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
     $scope.findDistance = function (thread) {
         //        console.log(thread.location);
         var pos;
-        var show;
         var onSuccess = function (position) {
             pos = new google.maps.LatLng(position.coords.latitude,
                 position.coords.longitude);
-            distance(pos, thread);
+            $scope.show = distance(pos, thread);
         };
 
         // onError Callback receives a PositionError object
@@ -147,6 +146,7 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
         }
         navigator.geolocation.getCurrentPosition(onSuccess, onError);
         var distance = function (pos, thread, $scope) {
+            var show;
             var rad = function (x) {
                 return x * (Math.PI / 180); //convert degrees to radians
             };
@@ -167,18 +167,18 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
             var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
             var d = R * c; //to km
-            var dis = 1;
+            console.log("Distance is " + d);
+            var dis = 5;
             if (d < dis) {
                 console.log(thread.desc + "less than " + dis);
-                console.log("Distance is " + d);
                 show = true;
             } else {
                 console.log(thread.desc + " more than " + dis);
-                console.log("Distance is " + d);
                 show = false;
             }
+            return show;
         }
-        return show;
+        return $scope.show;
     }
     
 
