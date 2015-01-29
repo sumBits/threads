@@ -34,7 +34,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         url: "/tab",
         abstract: true,
         templateUrl: "templates/tabs.html",
-        controller: function ($rootScope, $scope, $firebase, fireBaseData, $window, $state, $stateParams, $location) {
+        controller: function ($scope, $firebase, fireBaseData, $window, $location) {
             $scope.user = fireBaseData.ref().getAuth();
             console.log($scope.user + "User");
             if ($scope.user) {
@@ -53,7 +53,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
                 console.log("logged out.");
                 //                $scope.$apply();
             }
-            $rootScope.$on("$locationChangeSuccess", function (args) {
+            $scope.$on("$locationChangeSuccess", function (args) {
                 $scope.user = fireBaseData.ref().getAuth();
                 if ($scope.user) {
                         $scope.showLogin = false;
