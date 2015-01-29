@@ -114,6 +114,11 @@ angular.module('starter.services', [])
             get: function () {
                 return localThreads;
             },
+            remove: function(thread){
+              if(localThreads.indexOf(thread) !== -1){
+                localThreads.splice(localThreads.indexOf(thread), 1);
+              }
+            },
             clear: function () {
                 localThreads = [];
             }

@@ -104,10 +104,6 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
 
     $scope.nearbyThreads = sync.$asArray();
 
-    ref.on("value", function (snapshot) {
-        $scope.findDistance();
-    });
-
     $scope.add = function (nearbyThread) {
         if (nearbyThread.desc) {
             $scope.nearbyThreads.$add({
@@ -133,7 +129,7 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
             alert('code: ' + error.code + '\n' +
                 'message: ' + error.message + '\n');
         };
-
+        
 
         var distance = function (pos, thread) {
             var show;
@@ -175,6 +171,8 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
                 if ($scope.show) {
                     localThreadsCopy.add(thread);
                     console.log(localThreadsCopy.get());
+                }else{
+                    localThreadsCopy.remove(thread);
                 }
                 
             };
