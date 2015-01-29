@@ -4,7 +4,7 @@
   The FriendsCtrl pulls data from the Friends service (service.js)
   The Friends service returns an array of friend data
 -->
-<ion-view view-title="{{category}}">
+<ion-view view-title="{{category}}" overflow-scroll="true">
 
     <form ng-hide="showThreadAdd" style="position: absolute; bottom: 45px; width: 100%">
         <div class="item item-input-inset">
@@ -21,7 +21,7 @@
         <!--
         <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
 -->
-        <ul class="list" ng-repeat="thread in findDistance() | orderBy: ''">
+        <ul class="list" ng-repeat="thread in findDistance() | orderBy: 'date'">
             <li class="item item-avatar">
                 <img src="http://ionicframework.com/img/ionic-logo-blog.png">
                 <p>{{thread.creator}}</p>

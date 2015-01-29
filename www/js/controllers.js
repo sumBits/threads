@@ -30,12 +30,27 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
 
         $scope.add = function (userThread) {
             if (userThread.title && userThread.desc) {
+                var today = new Date();
+                var dd = today.getDate();
+                var mm = today.getMonth() + 1; //January is 0!
+                var yyyy = today.getFullYear();
+
+                if (dd < 10) {
+                    dd = '0' + dd
+                }
+
+                if (mm < 10) {
+                    mm = '0' + mm
+                }
+
+                today = mm + '/' + dd + '/' + yyyy;
+
                 $scope.userThreads.$add({
                     creator: $scope.user.password.email,
                     title: userThread.title,
                     desc: userThread.desc,
                     location: pos,
-                    date: 0,
+                    date: today
                 })
                 userThread.title = "";
                 userThread.desc = "";
@@ -107,12 +122,41 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
     $scope.copy = [];
 
     $scope.add = function (nearbyThread) {
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1; //January is 0!
+        var yyyy = today.getFullYear();
+        var HH = today.getHours();
+        var MM = today.getMinutes();
+        var SS = today.getSeconds();
+
+        if (dd < 10) {
+            dd = '0' + dd
+        }
+        if (HH < 10) {
+            HH = '0' + HH
+        }
+        if (MM < 10) {
+            MM = '0' + MM
+        }
+        if (SS < 10) {
+            SS = '0' + SS
+        }
+
+        if (mm < 10) {
+            mm = '0' + mm
+        }
+
+        today = yyyy + '-' + mm + '-' + dd + ' ' + HH + ':' + MM + ':' + SS;
+        console.log(today);
+
+
         if (nearbyThread.desc) {
             $scope.nearbyThreads.$add({
                 creator: $scope.user.password.email,
                 desc: nearbyThread.desc,
                 location: pos,
-                date: 0,
+                date: today,
                 votes: 0
             });
             nearbyThread.desc = "";
