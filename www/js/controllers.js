@@ -41,6 +41,13 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
                 userThread.desc = "";
             }
         }
+        ref.on("child_changed", function (snapshot) {
+            var changeduserThread = snapshot.val();
+            console.log("userThread updated!");
+            if (changeduserThread !=== null) {
+                $scope.userThreads = sync.$asArray();
+            }
+        });
 
         $scope.joinThread = function (thread) {
             var childRef = new Firebase("https://threadstsa.firebaseio.com/userThreads/" + thread.$id + "/members");
@@ -180,7 +187,6 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
         }
         return $scope.show;
     }
-    
 
 })
 
