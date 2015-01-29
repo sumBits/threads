@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('starter.controllers', ['firebase', 'ngCordova'])
-    .controller('DashCtrl', function ($scope, $firebase, fireBaseData, $cordovaGeolocation) {
+    .controller('DashCtrl', function ($scope, $firebase, fireBaseData) {
         var ref = new Firebase("https://threadstsa.firebaseio.com/userThreads/");
         var sync = $firebase(ref);
         var pos;
