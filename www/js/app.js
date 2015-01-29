@@ -34,7 +34,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         url: "/tab",
         abstract: true,
         templateUrl: "templates/tabs.html",
-        controller: function ($rootScope, $scope, $firebase, fireBaseData, $window, $state) {
+        controller: function ($rootScope, $scope, $firebase, fireBaseData, $window, $state, $stateParams, $location) {
             $scope.user = fireBaseData.ref().getAuth();
             console.log($scope.user + "User");
             if ($scope.user) {
@@ -55,29 +55,19 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
             }
             $rootScope.$on("$locationChangeSuccess", function (args) {
                 $scope.user = fireBaseData.ref().getAuth();
-                if ($state.current.name == 'tab.dash') {
-                    $window.location.reload();
-                    if($scope.user){
-                        $scope.showLogin = false;
-                    }else{
-                        $scope.showLogin = true;
-                    }
-                }
                 if ($scope.user) {
-                    console.log("Logged In");
-                    $scope.showThreadAdd = false;
-                    $scope.showLogin = false;
-
-                    //checks if the user has logged in; if true, the user is not logged in and the login form will be displayed
-                    //                    $scope.$apply();
-                } else {
-                    $scope.showThreadAdd = true;
-                    $scope.showLogin = true;
-                    if (sync) {
-                        sync.$destroy;
+                        $scope.showLogin = false;
+                        $scope.showThreadAdd = false;
+                        console.log("Logged In");
+                    } else {
+                        $scope.showLogin = true;
+                        $scope.showThreadAdd = true;
+                        console.log("Logged Out");
                     }
-                    console.log("logged out.");
-                    //                    $scope.$apply();
+                console.log("Location is " + $location.url());
+
+                if ($location.url() === '/tab/dash' && $scope.user) {
+                    $window.location.reload();
                 }
 
             })
