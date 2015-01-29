@@ -11,11 +11,11 @@
     </form>
     <ion-content class="has-header chat" padding="false" overflow-scroll="true">
         <div class="list" ng-repeat="comment in comments">
-            <a class="item item-text-wrap item-avatar" href="#">
+            <div class="item item-text-wrap item-avatar">
                 <img src="http://ionicframework.com/img/ionic-logo-blog.png">
                 <h2>{{comment.user}}</h2>
                 <p>{{comment.message}}</p>
-            </a>
+            </div>
         </div>
 
     </ion-content>
