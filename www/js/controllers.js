@@ -132,6 +132,7 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
     $scope.findDistance = function (thread) {
         //        console.log(thread.location);
         var pos;
+        var show;
         var onSuccess = function (position) {
             pos = new google.maps.LatLng(position.coords.latitude,
                 position.coords.longitude);
@@ -169,13 +170,17 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
             var dis = 1;
             if (d < dis) {
                 console.log(thread.desc + "less than " + dis);
-                return false;
+                console.log("Distance is " + d);
+                show = true;
             } else {
                 console.log(thread.desc + " more than " + dis);
-                return true;
+                console.log("Distance is " + d);
+                show = false;
             }
         }
+        return show;
     }
+    
 
 })
 
