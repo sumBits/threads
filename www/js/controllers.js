@@ -20,7 +20,7 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
         navigator.geolocation.getCurrentPosition(onSuccess, onError);
 
         $scope.user = fireBaseData.ref().getAuth();
-
+    
         $scope.userThreads = sync.$asArray();
 
         $scope.$watch('userThreads', function () {
@@ -122,7 +122,7 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
     }
 
     $scope.findDistance = function () {
-//        localThreadsCopy.clear();
+        localThreadsCopy.clear();
         // onError Callback receives a PositionError object
         //
         function onError(error) {
@@ -168,11 +168,12 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
                 pos = new google.maps.LatLng(position.coords.latitude,
                     position.coords.longitude);
                 $scope.show = distance(pos, thread);
+                console.log($scope.show);
                 if ($scope.show) {
                     localThreadsCopy.add(thread);
                     console.log(localThreadsCopy.get());
                 }else{
-                    localThreadsCopy.remove(thread);
+                    localThreadsCopy.remove(threadm);
                 }
                 
             };
