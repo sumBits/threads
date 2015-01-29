@@ -20,7 +20,7 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
         navigator.geolocation.getCurrentPosition(onSuccess, onError);
 
         $scope.user = fireBaseData.ref().getAuth();
-    
+
         $scope.userThreads = sync.$asArray();
 
         $scope.$watch('userThreads', function () {
@@ -104,6 +104,8 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
 
     $scope.nearbyThreads = sync.$asArray();
 
+    $scope.copy = [];
+
     $scope.add = function (nearbyThread) {
         if (nearbyThread.desc) {
             $scope.nearbyThreads.$add({
@@ -115,7 +117,6 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
             });
             nearbyThread.desc = "";
         }
-        console.log(localThreadsCopy.get());
     }
     $scope.addVote = function (thread) {
         thread.votes++;
@@ -130,7 +131,7 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
             alert('code: ' + error.code + '\n' +
                 'message: ' + error.message + '\n');
         };
-        
+
 
         var distance = function (pos, thread) {
             var show;
@@ -165,6 +166,7 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
         };
         angular.forEach($scope.nearbyThreads, function (thread) {
             navigator.geolocation.getCurrentPosition(onSuccess, onError);
+
             function onSuccess(position) {
                 pos = new google.maps.LatLng(position.coords.latitude,
                     position.coords.longitude);
@@ -172,15 +174,16 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
                 console.log($scope.show);
                 if ($scope.show) {
                     localThreadsCopy.add(thread);
-                    console.log(localThreadsCopy.get());
-                }else{
+                    $scope.copy = localThreadsCopy.get();
+                    //                    console.log(localThreadsCopy.get());
+                } else {
                     localThreadsCopy.remove(thread);
                 }
-                
+
             };
         });
-        console.log(localThreadsCopy.get());
-        return localThreadsCopy.get();
+        console.log($scope.copy);
+        return $scope.copy;
     }
 })
 
