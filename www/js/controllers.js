@@ -148,8 +148,8 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
         navigator.geolocation.getCurrentPosition(onSuccess, onError);
         var distance = function (pos, thread, $scope) {
             var show;
-            var rad = function (x) {
-                return x * (Math.PI / 180); //convert degrees to radians
+            var rad = function (degrees) {
+                return degrees * (Math.PI / 180); //convert degrees to radians
             };
             var R = 6371; // Earth's mean radius in meters
             var lat1 = thread.location.k;
