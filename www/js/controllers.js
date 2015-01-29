@@ -115,6 +115,7 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
             });
             nearbyThread.desc = "";
         }
+        console.log(localThreadsCopy.get());
     }
     $scope.addVote = function (thread) {
         thread.votes++;
@@ -173,7 +174,7 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
                     localThreadsCopy.add(thread);
                     console.log(localThreadsCopy.get());
                 }else{
-                    localThreadsCopy.remove(threadm);
+                    localThreadsCopy.remove(thread);
                 }
                 
             };
