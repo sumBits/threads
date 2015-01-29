@@ -3,7 +3,7 @@
        <div class="card" ng-show="showLogin">
             <div class="item item-text-wrap">You should login</div>
         </div>
-        <div class="list card" ng-repeat="thread in userThreads" type="item-text-wrap" href="#/tab/userThreads/{{thread.title}}">
+        <div class="list card item-text-wrap" ng-repeat="thread in userThreads" type="item-text-wrap" href="#/tab/userThreads/{{thread.title}}">
             <div class="item item-avatar">
                 <img src="http://ionicframework.com/img/ionic-logo-blog.png">
                 <h2>{{thread.title}}</h2>
