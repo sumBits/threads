@@ -54,7 +54,6 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
                 snapshot.forEach(function (secondSnapshot) {
                     if ($scope.user.password.email === secondSnapshot.val()) {
                         exists = true;
-                        break;
                     }
                 });
             });

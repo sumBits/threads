@@ -38,48 +38,48 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 
 
 
-            $scope.user = fireBaseData.ref().getAuth();
-            console.log($scope.user + "User");
-            if ($scope.user) {
-                console.log("Logged In");
-                $scope.showThreadAdd = false; //checks if the user has logged in; if true, the user is not logged in and the login form will be displayed
-                //                $scope.$apply();
-                var ref = null;
-                if (sync) {
-                    sync.$destroy;
-                }
-                var ref = new Firebase("https://threadstsa.firebaseio.com/userThreads/");
-                var sync = $firebase(ref);
+                        $scope.user = fireBaseData.ref().getAuth();
+                        console.log($scope.user + "User");
+                        if ($scope.user) {
+                            console.log("Logged In");
+                            $scope.showThreadAdd = false; //checks if the user has logged in; if true, the user is not logged in and the login form will be displayed
+                            //                $scope.$apply();
+                            var ref = null;
+                            if (sync) {
+                                sync.$destroy;
+                            }
+                            var ref = new Firebase("https://threadstsa.firebaseio.com/userThreads/");
+                            var sync = $firebase(ref);
 
-            } else {
-                $scope.showThreadAdd = true;
-                console.log("logged out.");
-                //                $scope.$apply();
-            }
-            $rootScope.$on("$locationChangeSuccess", function (args) {
-                $scope.user = fireBaseData.ref().getAuth();
-                if ($scope.user) {
-                    console.log("Logged In");
-                    $scope.showThreadAdd = false;
-                    $scope.showLogin = false;
+                        } else {
+                            $scope.showThreadAdd = true;
+                            console.log("logged out.");
+                            //                $scope.$apply();
+                        }
+                        $rootScope.$on("$locationChangeSuccess", function (args) {
+                            $scope.user = fireBaseData.ref().getAuth();
+                            if ($scope.user) {
+                                console.log("Logged In");
+                                $scope.showThreadAdd = false;
+                                $scope.showLogin = false;
 
-                    //checks if the user has logged in; if true, the user is not logged in and the login form will be displayed
-                    //                    $scope.$apply();
-                } else {
-                    $scope.showThreadAdd = true;
-                    $scope.showLogin = true;
-                    if (sync) {
-                        sync.$destroy;
-                    }
-                    console.log("logged out.");
-                    //                    $scope.$apply();
-                }
+                                //checks if the user has logged in; if true, the user is not logged in and the login form will be displayed
+                                //                    $scope.$apply();
+                            } else {
+                                $scope.showThreadAdd = true;
+                                $scope.showLogin = true;
+                                if (sync) {
+                                    sync.$destroy;
+                                }
+                                console.log("logged out.");
+                                //                    $scope.$apply();
+                            }
 
-            })
+                        })
 
-        }
+             }
 
-    })
+        })
 
     // Each tab has its own nav history stack:
 
