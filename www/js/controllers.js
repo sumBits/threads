@@ -75,7 +75,6 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
     $scope.user = fireBaseData.ref().getAuth();
     $scope.categories = sync.$asArray();
     ref.on('value', function (snapshot) {
-        console.log(snapshot.val());
         if (snapshot.val() == null) {
             ref.set({
                 Food: "thread",
@@ -89,30 +88,27 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
 
 })
 
-.controller('CategoryCtrl', function ($scope, $stateParams, $firebase, fireBaseData) {
+.controller('CategoryCtrl', function ($scope, localThreadsCopy, $stateParams, $firebase, fireBaseData) {
     $scope.category = $stateParams.categoryId;
+    $scope.show;
     var ref = new Firebase("https://threadstsa.firebaseio.com/nearbyThreads/categories/" + $stateParams.categoryId);
-    var pos;
-    var onSuccess = function (position) {
+    var pos = navigator.geolocation.getCurrentPosition(function (position) {
         pos = new google.maps.LatLng(position.coords.latitude,
             position.coords.longitude);
-    };
-
-    // onError Callback receives a PositionError object
-    //
-    function onError(error) {
-        alert('code: ' + error.code + '\n' +
-            'message: ' + error.message + '\n');
-    }
-    navigator.geolocation.getCurrentPosition(onSuccess, onError);
+    }, function (err) {
+        console.log("There was an error getting current position.");
+    });
     var sync = $firebase(ref);
 
     $scope.user = fireBaseData.ref().getAuth();
 
     $scope.nearbyThreads = sync.$asArray();
 
-    $scope.add = function (nearbyThread) {
+    ref.on("value", function (snapshot) {
+        $scope.findDistance();
+    });
 
+    $scope.add = function (nearbyThread) {
         if (nearbyThread.desc) {
             $scope.nearbyThreads.$add({
                 creator: $scope.user.password.email,
@@ -121,7 +117,6 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
                 date: 0,
                 votes: 0
             });
-            nearbyThread.title = "";
             nearbyThread.desc = "";
         }
     }
@@ -129,23 +124,18 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
         thread.votes++;
         $scope.nearbyThreads.$save(thread);
     }
-    $scope.findDistance = function (thread) {
-        //        console.log(thread.location);
-        var pos;
-        var onSuccess = function (position) {
-            pos = new google.maps.LatLng(position.coords.latitude,
-                position.coords.longitude);
-            $scope.show = distance(pos, thread);
-        };
 
+    $scope.findDistance = function () {
+//        localThreadsCopy.clear();
         // onError Callback receives a PositionError object
         //
         function onError(error) {
             alert('code: ' + error.code + '\n' +
                 'message: ' + error.message + '\n');
-        }
-        navigator.geolocation.getCurrentPosition(onSuccess, onError);
-        var distance = function (pos, thread, $scope) {
+        };
+
+
+        var distance = function (pos, thread) {
             var show;
             var rad = function (degrees) {
                 return degrees * (Math.PI / 180); //convert degrees to radians
@@ -167,20 +157,31 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
             var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
             var d = R * c; //to km
-            console.log("Distance is " + d);
+            console.log(thread.desc + " distance is + " + d);
             var dis = 5;
             if (d < dis) {
-                console.log(thread.desc + "less than " + dis);
                 show = true;
             } else {
-                console.log(thread.desc + " more than " + dis);
                 show = false;
             }
             return show;
-        }
-        return $scope.show;
+        };
+        angular.forEach($scope.nearbyThreads, function (thread) {
+            navigator.geolocation.getCurrentPosition(onSuccess, onError);
+            function onSuccess(position) {
+                pos = new google.maps.LatLng(position.coords.latitude,
+                    position.coords.longitude);
+                $scope.show = distance(pos, thread);
+                if ($scope.show) {
+                    localThreadsCopy.add(thread);
+                    console.log(localThreadsCopy.get());
+                }
+                
+            };
+        });
+        console.log(localThreadsCopy.get());
+        return localThreadsCopy.get();
     }
-
 })
 
 .controller('FriendsCtrl', function ($scope, Friends) {
