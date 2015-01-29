@@ -45,7 +45,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
                 $scope.showThreadAdd = false; //checks if the user has logged in; if true, the user is not logged in and the login form will be displayed
                 //                $scope.$apply();
                 var ref = null;
-                sync.$destroy;
+                if (sync) {
+                    sync.$destroy;
+                }
                 var ref = new Firebase("https://threadstsa.firebaseio.com/userThreads/");
                 var sync = $firebase(ref);
 
@@ -55,7 +57,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
                 //                $scope.$apply();
             }
             $rootScope.$on("$locationChangeSuccess", function (args) {
-                console.log("Changed States");
                 $scope.user = fireBaseData.ref().getAuth();
                 if ($scope.user) {
                     console.log("Logged In");
@@ -67,6 +68,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
                 } else {
                     $scope.showThreadAdd = true;
                     $scope.showLogin = true;
+                    if (sync) {
+                        sync.$destroy;
+                    }
                     console.log("logged out.");
                     //                    $scope.$apply();
                 }
