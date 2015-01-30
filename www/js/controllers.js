@@ -120,7 +120,7 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
     $scope.nearbyThreads = sync.$asArray();
 
     $scope.$watch(function () {
-            return $scope.nearbyThreads.length;
+            return localThreadsCopy.get().length;
         },function () {
             $location.hash('bottom');
             $anchorScroll();

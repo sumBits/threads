@@ -13,7 +13,7 @@
         <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
 -->
         <ul class="list">
-            <li class="item item-avatar" ng-repeat="thread in  | orderBy: 'date'">
+            <li class="item item-avatar" ng-repeat="thread in findDistance() | orderBy: 'date'">
                 <img src="http://ionicframework.com/img/ionic-logo-blog.png">
                 <p>{{thread.creator}}</p>
                 <h2>{{thread.desc}}</h2>
