@@ -171,6 +171,7 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
             });
             nearbyThread.desc = "";
         }
+        $scope.$apply;
     }
     $scope.addVote = function (thread) {
         thread.votes++;

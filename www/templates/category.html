@@ -4,8 +4,26 @@
   The FriendsCtrl pulls data from the Friends service (service.js)
   The Friends service returns an array of friend data
 -->
-<ion-view view-title="{{category}}" overflow-scroll="true">
+<ion-view view-title="{{category}}">
 
+
+    <ion-content class="chat" id="content-test" overflow-scroll="true">
+        <div id="map-canvas"></div>
+        <!--
+        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+-->
+        <ul class="list">
+            <li class="item item-avatar" ng-repeat="thread in findDistance() | orderBy: 'date'">
+                <img src="http://ionicframework.com/img/ionic-logo-blog.png">
+                <p>{{thread.creator}}</p>
+                <h2>{{thread.desc}}</h2>
+                <p>{{thread.votes}} Votes</p>
+                <button class="button button-assertive" ng-click="addVote(thread)">Vote!</button>
+            </li>
+            <li id="bottom"></li>
+        </ul>
+
+    </ion-content>
     <form ng-hide="showThreadAdd" style="position: absolute; bottom: 45px; width: 100%">
         <div class="item item-input-inset">
             <label class="item-input-wrapper">
@@ -16,20 +34,6 @@
             </button>
         </div>
     </form>
-    <ion-content class="padding chat" overflow-scroll="true">
-        <div id="map-canvas"></div>
-        <!--
-        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
--->
-        <ul class="list" ng-repeat="thread in findDistance() | orderBy: 'date'">
-            <li class="item item-avatar">
-                <img src="http://ionicframework.com/img/ionic-logo-blog.png">
-                <p>{{thread.creator}}</p>
-                <h2>{{thread.desc}}</h2>
-                <p>{{thread.votes}} Votes</p>
-                <button class="button button-assertive" ng-click="addVote(thread)">Vote!</button>
-            </li>
-        </ul>
-        <div id="bottom" class="bottom"></div>
-    </ion-content>
+
+
 </ion-view>

@@ -26,6 +26,16 @@
     padding: 0;
 }
 
-.chat{
-    height: 500px;
+.chat {
+    padding-bottom:50px;
 }
+
+/*
+#content-test {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+}*/
