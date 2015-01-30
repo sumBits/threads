@@ -103,7 +103,7 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
 
 })
 
-.controller('CategoryCtrl', function ($scope, localThreadsCopy, $stateParams, $firebase, fireBaseData) {
+.controller('CategoryCtrl', function ($scope, localThreadsCopy, $stateParams, $firebase, fireBaseData, $location, $anchorScroll, $window) {
     $scope.category = $stateParams.categoryId;
     $scope.show;
     var ref = new Firebase("https://threadstsa.firebaseio.com/nearbyThreads/categories/" + $stateParams.categoryId);
@@ -118,13 +118,16 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
     $scope.user = fireBaseData.ref().getAuth();
 
     $scope.nearbyThreads = sync.$asArray();
-    
-    $scope.$watch(function(){
-        return $scope.nearbyThreads.length;
-    }, function() {
-        window.scrollTo(0, document.scrollHeight);
-        console.log("scroll to bottom");
-    }, true);
+
+    $scope.$watch(function () {
+            return $scope.nearbyThreads.length;
+        },function () {
+            $location.hash('bottom');
+            $anchorScroll();
+
+            console.log("scroll to bottom");
+        }
+    );
 
     $scope.copy = [];
 
@@ -206,7 +209,7 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
             var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
             var d = R * c; //to km
-//            console.log(thread.desc + " distance is + " + d);
+            //            console.log(thread.desc + " distance is + " + d);
             var dis = 5;
             if (d < dis) {
                 show = true;
@@ -232,7 +235,7 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
 
             };
         });
-//        console.log($scope.copy);
+        //        console.log($scope.copy);
         return $scope.copy;
     }
 })
