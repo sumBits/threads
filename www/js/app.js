@@ -38,7 +38,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
             if ($scope.user) {
                 console.log("Logged In");
                 $scope.showThreadAdd = false; //checks if the user has logged in; if true, the user is not logged in and the login form will be displayed
-                //                $scope.$apply();
+                //resets the Firebase reference to help refresh
                 var ref = null;
                 if (sync) {
                     sync.$destroy;
@@ -49,21 +49,23 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
             } else {
                 $scope.showThreadAdd = true;
                 console.log("logged out.");
-                //                $scope.$apply();
             }
+
+            //Changes view of login form and ability to post threads depending on user's login status
             $scope.$on("$locationChangeSuccess", function (args) {
                 $scope.user = fireBaseData.ref().getAuth();
                 if ($scope.user) {
-                        $scope.showLogin = false;
-                        $scope.showThreadAdd = false;
-                        console.log("Logged In");
-                    } else {
-                        $scope.showLogin = true;
-                        $scope.showThreadAdd = true;
-                        console.log("Logged Out");
-                    }
+                    $scope.showLogin = false;
+                    $scope.showThreadAdd = false;
+                    console.log("Logged In");
+                } else {
+                    $scope.showLogin = true;
+                    $scope.showThreadAdd = true;
+                    console.log("Logged Out");
+                }
                 console.log("Location is " + $location.url());
 
+                //If the main tab is navigated to, the window refreshes to get the latest user thread updates
                 if ($location.url() === '/tab/dash' && $scope.user) {
                     $window.location.reload();
                 }
@@ -74,8 +76,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 
     })
 
-    // Each tab has its own nav history stack:
-
+    // Each of these tabs associates a particular route with the appropriate html and javascript    
     .state('tab.dash', {
             url: '/dash',
             views: {
