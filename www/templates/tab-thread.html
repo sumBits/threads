@@ -10,8 +10,8 @@
         </div>
     </form>
     <ion-content class="has-header chat" padding="false" overflow-scroll="true">
-        <div class="list" ng-repeat="comment in comments">
-            <div class="item item-text-wrap item-avatar">
+        <div class="list">
+            <div class="item item-text-wrap item-avatar"  ng-repeat="comment in comments">
                 <img src="http://ionicframework.com/img/ionic-logo-blog.png">
                 <h2>{{comment.user}}</h2>
                 <p>{{comment.message}}</p>

@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
-<widget id="com.ionicframework.threads149819" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap = "http://phonegap.com/ns/1.0">
+<widget id="com.ionicframework.threads149819" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>Threads</name>
-    <description>
-        A location based social network.
+    <description>&#xD; A location based social network.&#xD;
     </description>
-    <author email="hi@ionicframework" href="http://ionicframework.com/">
-        threads development team
+    <author email="hi@ionicframework" href="http://ionicframework.com/">&#xD; threads development team&#xD;
     </author>
     <content src="index.html" />
     <access origin="*" />
@@ -13,22 +11,29 @@
     <preference name="UIWebViewBounce" value="true" />
     <preference name="DisallowOverscroll" value="true" />
     <preference name="BackupWebStorage" value="none" />
+    <preference name="permissions" value="none" />
     <feature name="StatusBar">
         <param name="ios-package" value="CDVStatusBar" onload="true" />
     </feature>
-
-    <!--
-      If you do not want any permissions to be added to your app, add the
-      following tag to your config.xml; you will still have the INTERNET
-      permission on your app, which PhoneGap requires.
-    -->
-    <preference name="permissions" value="none" />
-
-    <!-- to enable individual permissions use the following examples -->
     <feature name="http://api.phonegap.com/1.0/camera" />
     <feature name="http://api.phonegap.com/1.0/geolocation" />
     <feature name="http://api.phonegap.com/1.0/media" />
     <feature name="http://api.phonegap.com/1.0/network" />
     <feature name="http://api.phonegap.com/1.0/notification" />
-    <icon src="icon.png" />
+    <icon src="resources\android\icon\drawable-xhdpi-icon.png" />
+    <platform name="android">
+        <icon src="resources\android\icon\drawable-ldpi-icon.png" density="ldpi" />
+        <icon src="resources\android\icon\drawable-mdpi-icon.png" density="mdpi" />
+        <icon src="resources\android\icon\drawable-hdpi-icon.png" density="hdpi" />
+        <icon src="resources\android\icon\drawable-xhdpi-icon.png" density="xhdpi" />
+        <icon src="resources\android\icon\drawable-xxhdpi-icon.png" density="xxhdpi" />
+        <icon src="resources\android\icon\drawable-xxxhdpi-icon.png" density="xxxhdpi" />
+    </platform>
+
+
+    <preference name="permissions" value="none" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <plugin name="Geolocation" value="org.apache.cordova.GeoBroker" />
 </widget>
