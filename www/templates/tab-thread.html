@@ -1,4 +1,10 @@
+<!--
+    This is the thread tab. It is the display for the live updating chat in a user thread.
+-->
 <ion-view view-title="{{thread.title}}" class="has-header" hi>
+
+    <!--This is the submit form that allows users to contribute to the chat. It is outside the ion-content tag because it needs to have a
+    fixed position on the screen.-->
     <form style="position: absolute; bottom: 45px; width: 100%">
         <div class="item item-input-inset">
             <label class="item-input-wrapper">
@@ -9,13 +15,18 @@
             </button>
         </div>
     </form>
+
+    <!--This ion-content tag contains the chat-->
     <ion-content class="has-header chat" padding="false" overflow-scroll="true">
+
+        <!--The list containing the chat messages-->
         <div class="list">
-            <div class="item item-text-wrap item-avatar"  ng-repeat="comment in comments">
+            <div class="item item-text-wrap item-avatar" ng-repeat="comment in comments">
                 <img src="http://ionicframework.com/img/ionic-logo-blog.png">
                 <h2>{{comment.user}}</h2>
                 <p>{{comment.message}}</p>
             </div>
         </div>
+
     </ion-content>
 </ion-view>

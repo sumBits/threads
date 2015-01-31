@@ -1,28 +1,36 @@
+<!--
+    This view displays all of the user-created threads that a person can follow. It is the main tab that the app loads on start. Clicking on a group takes you to a group messaging page found in tab-thread.html  
+-->
+
+
 <ion-view view-title="Your Threads">
     <ion-content class="padding" overflow-scroll="true">
-       <div class="card" ng-show="showLogin">
+
+        <!--If the user is not logged in, a message is displayed telling them to log in-->
+        <div class="card" ng-show="showLogin">
             <div class="item item-text-wrap">You should login</div>
         </div>
+
+        <!--This is the list of user threads retrieved from the database.-->
         <div class="list card item-text-wrap" ng-repeat="thread in userThreads" type="item-text-wrap" href="#/tab/userThreads/{{thread.title}}">
             <div class="item item-avatar">
                 <img src="http://ionicframework.com/img/ionic-logo-blog.png">
                 <h2>{{thread.title}}</h2>
                 <p>{{thread.desc}}</p>
             </div>
-            <!--
-            <div class="item item-image">
-                <img src="../img/{{feed.id}}.png">
-            </div>
--->
+
+            <!--This link takes you to each thread's respective group message. -->
             <a class="item item-icon-left positive" href="#/tab/userThreads/{{thread.$id}}" ng-show="checkIfMember(thread)">
-                <i class="icon ion-ios7-arrow-forward"></i>
-                Jump In!
+                <i class="icon ion-ios7-arrow-forward"></i> Jump In!
             </a>
-            
-            <a class = "item item-icon-right positive" ng-click = "joinThread(thread)" ng-hide="checkIfMember(thread)">
-                <i class = "icon ion-ios7-plus"></i>Follow Group
+
+            <!--This link allows people to follow certain threads.-->
+            <a class="item item-icon-right positive" ng-click="joinThread(thread)" ng-hide="checkIfMember(thread)">
+                <i class="icon ion-ios7-plus"></i>Follow Group
             </a>
         </div>
+
+        <!--This is the form to create a new user thread. It is hidden when the user is not logged in.-->
         <form ng-hide="showThreadAdd">
             <div class="list list-inset">
                 <label class="item item-input">
@@ -34,5 +42,6 @@
                 <button class="button button-block button-assertive" ng-click="add(userThread)">Create a Thread</button>
             </div>
         </form>
+
     </ion-content>
 </ion-view>

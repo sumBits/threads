@@ -1,3 +1,8 @@
+<!--
+     This view loads the categories of nearby threads, namely food, education, weather, shopping and entertainment. All nearby posts are 
+     organized into these categories. Clicking on a category takes you to all the nearby posts about that category.
+-->
+
 <ion-view view-title="Local Threads">
     <ion-content overflow-scroll="true">
         <a ng-repeat="category in categories" href="#/tab/nearby/{{category.$id}}">

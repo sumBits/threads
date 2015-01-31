@@ -1,8 +1,17 @@
+<!--
+    This is the account tab. It contains a login form, a create account feature, and several other housekeeping features, such as our license.
+-->
+
+
 <ion-view view-title="Account">
     <ion-content>
+
+        <!--This is the error message displayed when the inputted login information is incorrect.-->
         <div class="item item-assertive error" ng-show="showError">
             <p class="title" style="color:white">Error logging in.</p>
         </div>
+
+        <!--This is the login form that allows users to log in.-->
         <div class="list loginForm" ng-show="showLoginForm">
             <label class="item item-input">
                 <span class="input-label">Email</span>
@@ -14,33 +23,42 @@
             </label>
             <button class="button button-block button-assertive" ng-click="login(login.em,login.pwd)">Login</button>
         </div>
+
+        <!--After logging in, the login form is hidden and replaced by the following badge, which tells the user what account is being used-->
         <div class="card loginForm" ng-hide="showLoginForm" type="item-text-wrap">
             <div class="item item-text-wrap">You are logged in as {{user.password.email}}</div>
         </div>
+
+        <!--The logout button.-->
         <button class="button button-block button-assertive" ng-click="logout()" ng-hide="showLoginForm">Logout</button>
+
+        <!--This div allows people to create a new account. You can simply enter your credentials in the form above and click this button.-->
         <div type="item-text-wrap">
             <button class="button button-block button-outline button-positive" ng-click="createAccount(login.em, login.pwd)" ng-show="showLoginForm" type="item-text-wrap">
                 Don't have an account? Enter an email and password above and click here.
             </button>
         </div>
+
+        <!--Link to the rules of using the Threads application.-->
         <div>
-          <a class="item item-icon-left positive" href="#/tab/rules">
-                <i class="icon ion-ios7-arrow-forward"></i>
-                Rules
-                </a>  
-        </div>
-        <div>
-               <a class="item item-icon-left positive" href="#/tab/license">
-                <i class="icon ion-ios7-arrow-forward"></i>
-                License
-                </a>
-        </div>
-        <div>
-        
-       <a class="item item-icon-left positive" href="#/tab/form">
-                <i class="icon ion-ios7-arrow-forward"></i>
-                Work log form
+            <a class="item item-icon-left positive" href="#/tab/rules">
+                <i class="icon ion-ios7-arrow-forward"></i> Rules
             </a>
         </div>
+
+        <!--Link to our license.-->
+        <div>
+            <a class="item item-icon-left positive" href="#/tab/license">
+                <i class="icon ion-ios7-arrow-forward"></i> License
+            </a>
+        </div>
+
+        <!--Link to our team's work log. This has been placed here temporarily for convenience. It will be removed prior to release.-->
+        <div>
+            <a class="item item-icon-left positive" href="#/tab/form">
+                <i class="icon ion-ios7-arrow-forward"></i> Work log form
+            </a>
+        </div>
+        
     </ion-content>
 </ion-view>
