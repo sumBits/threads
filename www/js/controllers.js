@@ -4,7 +4,31 @@
 
 'use strict';
 
-angular.module('starter.controllers', ['firebase', 'ngCordova'])
+angular.module('starter.controllers', ['firebase', 'ngCordova', 'openfb'])
+
+//facebook thingy
+.run(function ($rootScope, $state, $ionicPlatform, $window, OpenFB) {
+
+        OpenFB.init('828919927155023');
+
+        $ionicPlatform.ready(function () {
+            if (window.StatusBar) {
+                StatusBar.styleDefault();
+            }
+        });
+
+        $rootScope.$on('$stateChangeStart', function(event, toState) {
+            if (toState.name !== "app.login" && toState.name !== "app.logout" && !$window.sessionStorage['fbtoken']) {
+                $state.go('app.login');
+                event.preventDefault();
+            }
+        });
+
+        $rootScope.$on('OAuthException', function() {
+            $state.go('app.login');
+        });
+
+    })
 
 // Controller for the main user threads tab
 .controller('DashCtrl', function ($scope, $firebase, fireBaseData) {
@@ -297,6 +321,18 @@ angular.module('starter.controllers', ['firebase', 'ngCordova'])
 
 // Controller for user accounts and login
 .controller('AccountCtrl', function ($scope, fireBaseData) {
+    
+    // Facebook login
+    $scope.facebookLogin = function () {
+
+            OpenFB.login('email,read_stream,publish_stream').then(
+                function () {
+                    $location.path('/app/person/me/feed');
+                },
+                function () {
+                    alert('OpenFB login failed');
+                });
+        };
     
     // Variable controlls if login form is displayed
     $scope.showLoginForm = false;
