@@ -42,7 +42,8 @@ angular.module('openfb', [])
          */
         function init(appId, redirectURL, store) {
             fbAppId = appId;
-            if (redirectURL) oauthRedirectURL = redirectURL;
+//            if (redirectURL) oauthRedirectURL = redirectURL;
+            oauthRedirectURL = "http://192.168.0:55000/oauthcallback.html";
             if (store) tokenStore = store;
         }
 

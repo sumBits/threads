@@ -320,7 +320,7 @@ angular.module('starter.controllers', ['firebase', 'ngCordova', 'openfb'])
 })
 
 // Controller for user accounts and login
-.controller('AccountCtrl', function ($scope, fireBaseData) {
+.controller('AccountCtrl', function ($scope, fireBaseData, OpenFB) {
     
     // Facebook login
     $scope.facebookLogin = function () {
