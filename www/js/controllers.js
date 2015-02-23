@@ -9,7 +9,7 @@ angular.module('starter.controllers', ['firebase', 'ngCordova', 'openfb'])
 //facebook thingy
 .run(function ($rootScope, $state, $ionicPlatform, $window, OpenFB) {
 
-        OpenFB.init('828919927155023');
+        OpenFB.init('551821408288113');
 
         $ionicPlatform.ready(function () {
             if (window.StatusBar) {
